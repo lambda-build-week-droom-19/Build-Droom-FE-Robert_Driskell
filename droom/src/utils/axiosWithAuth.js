@@ -5,6 +5,6 @@ export const fakeAuth = {
     },
     signout(cb) {
       this.isAuthenticated = false;
-      setTimeout(cb, 100);
+      localStorage.setItem("userToken", "")
     }
   };

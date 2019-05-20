@@ -99,10 +99,11 @@ const AuthButton = withRouter(
 
 
   class Login extends React.Component {
-    state = { redirectToReferrer: false, credentials: {username: "chase", password: "hello"}};
+    state = { redirectToReferrer: false, credentials: {username: "seeker1", password: "something1"}};
   
     login = () => {
         fakeAuth.authenticate(this.state.credentials, this.props.logincb);
+        this.props.history.push("/protected");
     };
   
     render() {
