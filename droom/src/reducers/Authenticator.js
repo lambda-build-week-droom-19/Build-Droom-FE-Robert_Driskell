@@ -7,6 +7,7 @@ export const addTokenToLocalStorage = store => next => action =>
         localStorage.setItem('userToken', action.payload.token);
         fakeAuth.isAuthenticated = true;
     }
+    
     if(action.type === LOGIN_FAILURE) console.log(action.payload);
     next(action);
 };
