@@ -1,34 +1,51 @@
 import React from 'react';
 import './App.css';
 import { fakeAuth } from './utils/axiosWithAuth';
+import { connect } from 'react-redux';
 import {BrowserRouter as Router, Route, Link, Redirect, withRouter} from "react-router-dom"
-import LandingPage from './routes/LandingPage';
+import {login} from "./actions/index"
+/* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
-import DebugRouteChase from './DebugRouteChase';
+import DebugRouteChase from './DebugRouteChase'; */
 
-function App() {
-    return (
-        <div className="App">
-            <AuthButton />
-                <ul>
-                    <li>
-                        <Link to="/public">Public Page</Link>
-                    </li>
-                    <li>
-                        <Link to="/protected">Protected Page</Link>
-                    </li>
-                </ul>
-                <Route path="/public" component={Public} />
-                <Route path="/login" component={Login} />
-                <PrivateRoute path="/protected" component={Protected} />
-                <Route exact path="/" component={LandingPage} />
-                <Route exact path="debug-bobby" component={DebugRouteBobby} />
-                <Route exact path="debug-chase" component={DebugRouteChase} />
-        </div>
-    );
+class App extends React.Component {
+
+
+    render(){
+        return (
+            <div className="App">
+                <AuthButton />
+                    <ul>
+                        <li>
+                            <Link to="/public">Public Page</Link>
+                        </li>
+                        <li>
+                            <Link to="/protected">Protected Page</Link>
+                        </li>
+                    </ul>
+                    <Route path="/public" component={Public} />
+                    <Route path="/login" render={(props)=> (<Login {...props} logincb={this.props.login} />)} />
+                    <PrivateRoute path="/protected" component={Protected} />
+                    {/* 
+                        Commented out routes for debuging
+                    <Route exact path="/" component={LandingPage} />
+                    <Route exact path="debug-bobby" component={DebugRouteBobby} />
+                    <Route exact path="debug-chase" component={DebugRouteChase} /> 
+                    
+                    */}
+            </div>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = state => 
+{
+    return {
+        ...state
+    }
+}
+
+export default connect(mapStateToProps, {login})(App)
 
 
 const AuthButton = withRouter(
@@ -81,12 +98,10 @@ const AuthButton = withRouter(
 
 
   class Login extends React.Component {
-    state = { redirectToReferrer: false };
+    state = { redirectToReferrer: false, credentials: {username: "chase", password: "hello"}};
   
     login = () => {
-      fakeAuth.authenticate(() => {
-        this.setState({ redirectToReferrer: true });
-      });
+        fakeAuth.authenticate(this.state.credentials, this.props.logincb);
     };
   
     render() {
