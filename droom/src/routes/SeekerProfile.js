@@ -14,8 +14,9 @@ export default class SeekerProfile extends Component {
             seen: false
         }
     }
-    componentDidMount() {
 
+    componentDidMount() {
+        
     }
 
     render() {
