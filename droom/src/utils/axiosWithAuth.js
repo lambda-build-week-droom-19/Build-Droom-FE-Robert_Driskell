@@ -1,8 +1,7 @@
 export const fakeAuth = {
     isAuthenticated: false,
-    authenticate(cb) {
-      this.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
+    authenticate(cred,login) {
+      login(cred);
     },
     signout(cb) {
       this.isAuthenticated = false;
