@@ -22,8 +22,8 @@ function App() {
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/protected" component={Protected} />
                 <Route exact path="/" component={LandingPage} />
-                <Route exact path="debug-bobby" component={DebugRouteBobby} />
-                <Route exact path="debug-chase" component={DebugRouteChase} />
+                <Route exact path="/debug-bobby" component={DebugRouteBobby} />
+                <Route exact path="/debug-chase" component={DebugRouteChase} />
         </div>
     );
 }
