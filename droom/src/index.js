@@ -8,12 +8,13 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import rootReducer from './reducers';
+import {addTokenToLocalStorage} from './reducers/Authenticator'
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const store = createStore(rootReducer, applyMiddleware(thunk, addTokenToLocalStorage,logger));
 
 ReactDOM.render(
     <Provider store={store}>
