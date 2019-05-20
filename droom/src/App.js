@@ -9,8 +9,6 @@ import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
 class App extends React.Component {
-
-
     render(){
         return (
             <div className="App">
@@ -101,8 +99,7 @@ const AuthButton = withRouter(
     state = { redirectToReferrer: false, credentials: {username: "seeker1", password: "something1"}};
   
     login = () => {
-        fakeAuth.authenticate(this.state.credentials, this.props.logincb);
-        this.props.history.push("/protected");
+        fakeAuth.authenticate(this.state.credentials, this.props.logincb, () => this.props.history.push("/protected"));
     };
   
     render() {

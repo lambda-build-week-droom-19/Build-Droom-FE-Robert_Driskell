@@ -8,7 +8,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const login = creds => dispatch => {
     dispatch({ type: LOGIN_START });
     return axios
-      .post(`${SERVER_BASE_URL}/auth/seeker/login`, creds)
+      .post(`${SERVER_BASE_URL}/auth/login`, creds)
       .then(res => {
         localStorage.setItem('userToken', res.data.token);
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
