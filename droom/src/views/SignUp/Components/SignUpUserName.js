@@ -33,13 +33,12 @@ class Username extends React.Component
     {
         if(this.state.credentials==={} || this.state.credentials.password === "" || this.state.credentials.username === ""  ) return;
         if(this.state.credentials.password !== this.state.credentials.confirm) return;
-        //this.props.register(this.state.credentials,cb);
-        cb();
+        this.props.register(this.state.credentials,cb);
     }
     render()
     {
         //bypass
-        //{this.props.next()}
+        {this.props.next()}
         return (
         <div style={{margin: "0 auto", maxWidth:"200px"}}>
             <div className="signin-Input" style={{display: "flex", flexDirection: "column"}}>

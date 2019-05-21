@@ -6,12 +6,11 @@ class AccountType extends React.Component
 
     render()
     {
-        //{this.props.next()}
         return (
         <div>
             <div>AccountType</div>
-            <button onClick={()=> {this.props.data.userType = 0; this.props.next()}}>Seeker</button>
-            <button onClick={()=> {this.props.data.userType = 1; this.props.next()}}>Empoyeer</button>
+            <button onClick={()=> {this.props.setData({userType: 0}); this.props.next()}}>Seeker</button>
+            <button onClick={()=> {this.props.setData({userType: 1}); this.props.next()}}>Empoyeer</button>
         </div>
         )
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
-import {register} from "../../actions"
+import {register, updateInfo} from "../../actions"
 
 import PastExper from "./Components/SIgnUpPastExperience"
 import About from "./Components/SignUpAbout"
@@ -28,8 +28,8 @@ class SignUpApp extends React.Component
             last_name: "",
             location: "",
             bio: "", 
-            past_experience: "", 
-            interests: "", 
+            past_experience: [{company_name: "", job_title: "", description: ""}], 
+            interests: [""], 
             niche: 0, 
             seen: false,
             timestamp: "" 
@@ -65,6 +65,7 @@ class SignUpApp extends React.Component
     }
     getData()
     {
+        //console.log(this.data);
         return this.data;
     }
     setData(state)
@@ -74,15 +75,15 @@ class SignUpApp extends React.Component
             ...this.data,
             ...state
         }
-        console.log(this.data);
     }
     render()
     {
         if(this.state.screenIndex < 0 )
         {
             //call some code here to start the data upload
-            return <Redirect to={{pathname: "/protected"}} />
+            this.props.updateInfo(this.data, ()=>this.setState({...this.state, redirect : true}))
         }
+        if(this.state.rederect) return <Redirect to={{pathname: "/protected"}} />
         return(
         <div>
             
@@ -100,4 +101,4 @@ const mapStateToProps = state =>
     }
 }
 
-export default connect(mapStateToProps, {register})(SignUpApp)
+export default connect(mapStateToProps, {register,updateInfo})(SignUpApp)
