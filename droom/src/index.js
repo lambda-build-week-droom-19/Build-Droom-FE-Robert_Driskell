@@ -14,7 +14,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, addTokenToLocalStorage,logger));
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
     <Provider store={store}>
