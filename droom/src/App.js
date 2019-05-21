@@ -4,12 +4,17 @@ import { fakeAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import {BrowserRouter as Router, Route, Link, Redirect, withRouter} from "react-router-dom"
 import {login} from "./actions/index"
+import SignUpApp from './views/SignUp/SignUpApp';
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
  
 class App extends React.Component {
+    componentWillMount()
+    {
+        fakeAuth.isAuthenticated = localStorage.getItem("userToken") !== "";
+    }
     render(){
         return (
             <div className="App">
@@ -23,7 +28,8 @@ class App extends React.Component {
                         </li>
                     </ul>
                     <Route path="/public" component={Public} />
-                    <Route path="/login" render={(props)=> (<Login {...props} logincb={this.props.login} />)} />
+                    <Route path="/login" exact render={(props)=> (<Login {...props} logincb={this.props.login} />)} />
+                    <Route path="/signup" exact render={(props) => (<SignUpApp {...props}/>)} />
                     <PrivateRoute path="/protected" component={Protected} />
                     {/* 
                         Commented out routes for debuging
@@ -97,7 +103,7 @@ const AuthButton = withRouter(
 
 
   class Login extends React.Component {
-    state = { redirectToReferrer: false, credentials: {username: "seeker1", password: "something1"}};
+    state = { redirectToReferrer: false, credentials: {username: "chase", password: "chase123"}};
   
     login = () => {
         fakeAuth.authenticate(this.state.credentials, this.props.logincb, () => this.props.history.push("/protected"));
@@ -107,12 +113,13 @@ const AuthButton = withRouter(
       let { from } = this.props.location.state || { from: { pathname: "/" } };
       let { redirectToReferrer } = this.state;
   
-      if (redirectToReferrer) return <Redirect to={from} />;
+      if (redirectToReferrer || fakeAuth.isAuthenticated) return <Redirect to={from} />;
   
       return (
         <div>
           <p>You must log in to view the page at {from.pathname}</p>
           <button onClick={this.login}>Log in</button>
+          <button><Link to="/signup" >Sign Up</Link></button>
         </div>
       );
     }
