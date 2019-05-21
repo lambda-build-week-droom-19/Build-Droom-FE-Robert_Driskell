@@ -4,7 +4,7 @@ import {register} from "../../actions"
 
 import PastExper from "./Components/SIgnUpPastExperience"
 import About from "./Components/SignUpAbout"
-import AccoutType from "./Components/SignUpAccountType"
+import AccountType from "./Components/SignUpAccountType"
 import Hobbies from "./Components/SignUpHobbies"
 import Interests from "./Components/SignUpJobInterests"
 import UserName from "./Components/SignUpUserName" 
@@ -22,9 +22,9 @@ class SignUpApp extends React.Component
             screenIndex: 0 // is the screen we are on, this becomes -1 we will break and send the info
         }
     this.view = [
-        [ /*list of components to call for seakers*/
+        [ /*list of components to call for seekers*/
            <UserName data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <AccoutType data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <AccountType data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <Hobbies data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <Interests data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <About data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
