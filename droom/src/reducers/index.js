@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {addTokenToLocalStorage} from "./Authenticator"
+import { loginReducer } from "./Authenticator"
 export default combineReducers({
-    addTokenToLocalStorage
+    loginReducer
 });
