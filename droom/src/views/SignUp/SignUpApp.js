@@ -35,7 +35,19 @@ class SignUpApp extends React.Component
             <div>employers goodbye</div>
         ] 
     ]
-    this.data = {}; //list of data we are collecting to send to the server when app finalizes
+    this.data = {
+        userType: -1,
+        seeker_id: -1,
+        first_name: "",
+        last_name: "",
+        location: "",
+        bio: "", 
+        past_experience: "", 
+        interests: "", 
+        niche: 0, 
+        seen: false, 
+        timestamp: "" 
+    }; //list of data we are collecting to send to the server when app finalizes
     }
     prevElement()
     {

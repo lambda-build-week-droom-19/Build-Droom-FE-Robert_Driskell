@@ -29,12 +29,10 @@ class Username extends React.Component
             }
           });
     }
-    authenticate()
+    authenticate(cb)
     {
         if(this.state.credentials.password !== this.state.credentials.confirm) return false;
-        console.log(this.state.credentials);
-        return this.props.register(this.state.credentials)
-        .then(()=> true).catch(err => false);
+        return this.props.register(this.state.credentials,cb);
     }
     render()
     {
@@ -45,8 +43,8 @@ class Username extends React.Component
                 <input name="password" placeholder="Password" onChange={this.handleChange}/>
                 <input name="confirm" placeholder="Comfirm" onChange={this.handleChange}/>
             </div> 
-            {this.props.index() !== 0 ? <button onClick={()=>{if(this.authenticate())this.props.prev()}}>Prev</button> : ""}
-            <button onClick={()=>{if(this.authenticate())this.props.next()}}>Next</button>
+            {this.props.index() !== 0 ? <button onClick={()=>{this.authenticate(this.props.prev())}}>Prev</button> : ""}
+            <button onClick={()=>{this.authenticate(this.props.next())}}>Next</button>
         </div>
         )
     }
