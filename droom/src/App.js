@@ -2,10 +2,12 @@ import React from 'react';
 import './App.css';
 import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
 import { login } from "./actions/index"
 
 import LoginPage from './routes/LoginPage';
+
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
@@ -27,6 +29,7 @@ class App extends React.Component {
                 <Route path="/public" component={Public} />
                 <PrivateRoute path="/protected" component={Protected} />
                 {/* 
+
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
                     <Route exact path="debug-bobby" component={DebugRouteBobby} />
@@ -69,3 +72,4 @@ function Public() {
 function Protected() {
     return <h3>Protected</h3>;
 }
+

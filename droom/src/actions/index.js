@@ -19,3 +19,22 @@ export const login = creds => dispatch => {
             dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
         });
 };
+
+export const register = creds => dispatch => {
+    dispatch({ type: LOGIN_START });
+    let cr = {username: creds.username, password: creds.password, user_type: -1};
+    return axios
+      .post(`${SERVER_BASE_URL}/auth/register`, cr)
+      .then(res => {
+        localStorage.setItem('userToken', res.data.token);
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+        console.log(res.data);
+      })
+      .catch(err => {
+        dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
+      });
+  };
+export function updateInfo()
+{
+    return {type: "none"}
+}
