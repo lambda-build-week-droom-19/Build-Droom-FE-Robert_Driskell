@@ -1,14 +1,36 @@
-import {LOGIN_SUCCESS, LOGIN_FAILURE} from "../actions"
-import {fakeAuth} from "../utils/axiosWithAuth"
+import {LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE} from "../actions"
 
-export const addTokenToLocalStorage = store => next => action => 
+const initialState = {
+    isLogging: false,
+    isAuth: false,
+    error: '',
+}
+
+export const loginReducer = (state = initialState, action) => 
 {
-    if(action.type === LOGIN_SUCCESS) {
-        localStorage.setItem('userToken', action.payload.token);
-        fakeAuth.isAuthenticated = true;
+    switch(action.type) {
+        case LOGIN_START:
+            return {
+                ...state,
+                isLogging: true,
+                error: '',
+            }
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                isLogging: false,
+                isAuth: true,
+                error: '',
+            }
+        case LOGIN_FAILURE:
+            return {
+                ...state,
+                isLogging: false,
+                isAuth: false,
+                error: action.payload,
+            }
+        default:
+            return state;
     }
-    
-    if(action.type === LOGIN_FAILURE) console.log(action.payload);
-    next(action);
 };
 
