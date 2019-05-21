@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { login } from '../actions';
+import { login, getCurrentUser } from '../actions';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -25,9 +25,14 @@ class LoginPage extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.login(this.state.credentials).then(() => {
-            this.props.history.push('/protected');
-        });
+        this.props.login(this.state.credentials)
+            .then(() => {
+                this.props.history.push('/protected');
+            })
+            .then(() => {
+                this.props.getCurrentUser();
+            });
+        
         this.setState({ username: '', password: '' })
     };
 
@@ -66,5 +71,6 @@ const mapStateToProps = state => ({
   
   export default connect(
     mapStateToProps,
-    { login }
+    { login,
+    getCurrentUser }
 )(LoginPage);
