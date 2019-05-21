@@ -31,11 +31,14 @@ class Username extends React.Component
     }
     authenticate(cb)
     {
-        if(this.state.credentials.password !== this.state.credentials.confirm) return false;
-        return this.props.register(this.state.credentials,cb);
+        if(this.state.credentials==={} || this.state.credentials.password === "" || this.state.credentials.username === ""  ) return;
+        if(this.state.credentials.password !== this.state.credentials.confirm) return;
+        this.props.register(this.state.credentials,cb);
     }
     render()
     {
+        //bypass
+        {this.props.next()}
         return (
         <div style={{margin: "0 auto", maxWidth:"200px"}}>
             <div className="signin-Input" style={{display: "flex", flexDirection: "column"}}>
@@ -43,8 +46,8 @@ class Username extends React.Component
                 <input name="password" placeholder="Password" onChange={this.handleChange}/>
                 <input name="confirm" placeholder="Comfirm" onChange={this.handleChange}/>
             </div> 
-            {this.props.index() !== 0 ? <button onClick={()=>{this.authenticate(this.props.prev())}}>Prev</button> : ""}
-            <button onClick={()=>{this.authenticate(this.props.next())}}>Next</button>
+            {this.props.index() !== 0 ? <button onClick={()=>{this.authenticate(this.props.prev)}}>Prev</button> : ""}
+            <button onClick={()=>{this.authenticate(this.props.next)}}>Next</button>
         </div>
         )
     }
