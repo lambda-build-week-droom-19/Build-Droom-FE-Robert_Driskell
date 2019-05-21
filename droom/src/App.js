@@ -10,6 +10,10 @@ import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
 class App extends React.Component {
+    componentWillMount()
+    {
+        fakeAuth.isAuthenticated = localStorage.getItem("userToken") !== "";
+    }
     render(){
         return (
             <div className="App">
@@ -108,7 +112,7 @@ const AuthButton = withRouter(
       let { from } = this.props.location.state || { from: { pathname: "/" } };
       let { redirectToReferrer } = this.state;
   
-      if (redirectToReferrer) return <Redirect to={from} />;
+      if (redirectToReferrer || fakeAuth.isAuthenticated) return <Redirect to={from} />;
   
       return (
         <div>
