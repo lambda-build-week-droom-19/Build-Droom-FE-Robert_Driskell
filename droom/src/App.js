@@ -1,37 +1,49 @@
 import React from 'react';
 import './App.css';
-import { fakeAuth } from './utils/axiosWithAuth';
+import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
-import {BrowserRouter as Router, Route, Link, Redirect, withRouter} from "react-router-dom"
-import {login} from "./actions/index"
-import SignUpApp from './views/SignUp/SignUpApp';
+
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
+import { login, getCurrentUser } from "./actions/index"
+
+import LoginPage from './routes/LoginPage';
+import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
+
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
- 
+
 class App extends React.Component {
-    componentWillMount()
-    {
-        fakeAuth.isAuthenticated = localStorage.getItem("userToken") !== "";
+    logout = () => {
+        localStorage.clear();
+        window.location.reload();
     }
-    render(){
+    componentWillMount() {
+        this.props.getCurrentUser();
+    }
+    
+    render() {
         return (
             <div className="App">
-                <AuthButton />
-                    <ul>
-                        <li>
-                            <Link to="/public">Public Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/protected">Protected Page</Link>
-                        </li>
-                    </ul>
-                    <Route path="/public" component={Public} />
-                    <Route path="/login" exact render={(props)=> (<Login {...props} logincb={this.props.login} />)} />
-                    <Route path="/signup" exact render={(props) => (<SignUpApp {...props}/>)} />
-                    <PrivateRoute path="/protected" component={Protected} />
-                    {/* 
+                <button onClick={this.logout}>LOGOUT</button>
+                <Route exact path="/" component={LoginPage} />
+                <ul>
+                    <li>
+                        <Link to="/public">Public Page</Link>
+                    </li>
+                    <li>
+                        <Link to="/protected">Protected Page</Link>
+                    </li>
+                    <li>
+                        <Link to="/my-profile">My Profile</Link>
+                    </li>
+                </ul>
+                <Route path="/my-profile" component={CurrentCompanyProfile} />
+                <Route path="/public" component={Public} />
+                <PrivateRoute path="/protected" component={Protected} />
+                {/* 
+
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
                     <Route exact path="debug-bobby" component={DebugRouteBobby} />
@@ -43,84 +55,35 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = state => 
-{
+const mapStateToProps = state => {
     return {
         ...state
     }
 }
 
-export default connect(mapStateToProps, {login})(App)
+export default connect(mapStateToProps, { login, getCurrentUser })(App)
 
-
-const AuthButton = withRouter(
-    ({ history }) =>
-      fakeAuth.isAuthenticated ? (
-        <p>
-          Welcome!{" "}
-          <button
-            onClick={() => {
-              fakeAuth.signout(() => history.push("/"));
-            }}
-          >
-            Sign out
-          </button>
-        </p>
-      ) : (
-        <p>You are not logged in.</p>
-      )
-  );
-
-
-  function PrivateRoute({ component: Component, ...rest }) {
+const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
-      <Route
-        {...rest}
-        render={props =>
-          fakeAuth.isAuthenticated ? (
-            <Component {...props} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: props.location }
-              }}
-            />
-          )
-        }
-      />
+        <Route
+            {...rest}
+            render={() => {
+                if (localStorage.getItem('userToken')) {
+                    return <Component />;
+                } else {
+                    return <Redirect to="/" />;
+                }
+            }}
+        />
     );
-  }
+}
 
 
-  function Public() {
+function Public() {
     return <h3>Public</h3>;
-  }
-  
-  function Protected() {
+}
+
+function Protected() {
     return <h3>Protected</h3>;
-  }
+}
 
-
-  class Login extends React.Component {
-    state = { redirectToReferrer: false, credentials: {username: "chase", password: "chase123"}};
-  
-    login = () => {
-        fakeAuth.authenticate(this.state.credentials, this.props.logincb, () => this.props.history.push("/protected"));
-    };
-  
-    render() {
-      let { from } = this.props.location.state || { from: { pathname: "/" } };
-      let { redirectToReferrer } = this.state;
-  
-      if (redirectToReferrer || fakeAuth.isAuthenticated) return <Redirect to={from} />;
-  
-      return (
-        <div>
-          <p>You must log in to view the page at {from.pathname}</p>
-          <button onClick={this.login}>Log in</button>
-          <button><Link to="/signup" >Sign Up</Link></button>
-        </div>
-      );
-    }
-  }
