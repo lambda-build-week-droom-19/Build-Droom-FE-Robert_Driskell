@@ -21,33 +21,35 @@ class SignUpApp extends React.Component
             userType: 0,
             screenIndex: 0 // is the screen we are on, this becomes -1 we will break and send the info
         }
+        this.data = {
+            userType: 0,
+            seeker_id: -1,
+            first_name: "",
+            last_name: "",
+            location: "",
+            bio: "", 
+            past_experience: "", 
+            interests: "", 
+            niche: 0, 
+            seen: false,
+            timestamp: "" 
+        }; //list of data we are collecting to send to the server when app finalizes
     this.view = [
         [ /*list of components to call for seekers*/
-           <UserName data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <AccountType data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <Hobbies data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <Interests data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <About data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-           <PastExper data={this.data} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
+           <UserName getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <AccountType getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <About getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <PastExper getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <Hobbies getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+           <Interests getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
         ],
         [ /*list of components to call for employers*/
-            <div>employers hello</div>,
-            <div>employers goodbye</div>
+            <UserName getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+            <AccountType getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+            <About getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
         ] 
     ]
-    this.data = {
-        userType: -1,
-        seeker_id: -1,
-        first_name: "",
-        last_name: "",
-        location: "",
-        bio: "", 
-        past_experience: "", 
-        interests: "", 
-        niche: 0, 
-        seen: false, 
-        timestamp: "" 
-    }; //list of data we are collecting to send to the server when app finalizes
+   
     }
     prevElement()
     {
@@ -55,11 +57,24 @@ class SignUpApp extends React.Component
     }
     nextElement()
     {
-        this.setState({...this.state, screenIndex: this.state.screenIndex < this.view[this.state.userType].length-1 ? this.state.screenIndex+1 : -1 })
+        this.setState({...this.state, screenIndex: this.state.screenIndex < this.view[this.data.userType].length-1 ? this.state.screenIndex+1 : -1 })
     }
     getIndex()
     {
         return this.state.screenIndex;
+    }
+    getData()
+    {
+        return this.data;
+    }
+    setData(state)
+    {
+        this.data =
+        {
+            ...this.data,
+            ...state
+        }
+        console.log(this.data);
     }
     render()
     {
@@ -71,7 +86,7 @@ class SignUpApp extends React.Component
         return(
         <div>
             
-            {this.view[this.state.userType][this.state.screenIndex]}
+            {this.view[this.data.userType][this.state.screenIndex]}
         </div>
         )
     }
