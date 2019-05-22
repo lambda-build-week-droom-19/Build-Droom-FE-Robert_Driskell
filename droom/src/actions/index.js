@@ -65,6 +65,16 @@ export const getCurrentUser = () => dispatch => {
         })
 }
 
-export function updateInfo() {
-    return { type: "none" }
+export const updateInfo = (data, cb) => dispatch => {
+    dispatch({ type: "start-update" });
+    return axiosWithAuth(4)
+        .pull(`${SERVER_BASE_URL}/profile/seeker`, { first_name: "chase", last_name: "wenner" })
+        .then(res => {
+            console.log(res.data);
+            //cb();
+        })
+        .catch(err => {
+            dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
+        });
 }
+

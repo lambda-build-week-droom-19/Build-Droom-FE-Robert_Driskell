@@ -2,12 +2,14 @@ import React from 'react';
 import './App.css';
 import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
-
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
 import { login, getCurrentUser } from "./actions/index"
 
 import LoginPage from './routes/LoginPage';
+
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
+import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -39,11 +41,10 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
-                <Route path="/my-profile" component={CurrentCompanyProfile} />
+                <Route path="/my-profile" component={CurrentSeekerProfile} />
                 <Route path="/public" component={Public} />
                 <PrivateRoute path="/protected" component={Protected} />
                 {/* 
-
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
                     <Route exact path="debug-bobby" component={DebugRouteBobby} />
@@ -86,4 +87,3 @@ function Public() {
 function Protected() {
     return <h3>Protected</h3>;
 }
-
