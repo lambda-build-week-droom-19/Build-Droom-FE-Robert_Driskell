@@ -9,6 +9,7 @@ import SignUpApp from "./views/SignUp/SignUpApp";
 import LoginPage from './routes/LoginPage';
 
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
+import JobProfile from './routes/JobProfile';
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -40,10 +41,11 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
-                <Route path="/my-profile" component={CurrentCompanyProfile} />
+                <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/protected" component={Protected} />
+                <Route path="/job/:id" render={props => <JobProfile {...props}/>} />
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />

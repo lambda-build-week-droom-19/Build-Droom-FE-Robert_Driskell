@@ -77,7 +77,7 @@ export const getCurrentUser = () => dispatch => {
         })
 }
 
- export const updateInfo = (data,cb) => dispatch => 
+export const updateInfo = (data,cb) => dispatch => 
   {
     dispatch({ type: "start-update" });
     let id = localStorage.getItem('userID');
@@ -95,10 +95,10 @@ export const getCurrentUser = () => dispatch => {
   }
   export const NICHES_SUCCESS = "NICHES_SUCCESS";
 
-  export const getNiches = (cb, failcb) => dispatch =>
+  export const getNiches = (cb = ()=>{}, failcb = ()=>{}) => dispatch =>
   {
     dispatch({ type: "start-get-niches" });
-    axios
+    return axios
     .get(`${SERVER_BASE_URL}/niches`)
     .then(res =>
     {
@@ -107,3 +107,22 @@ export const getCurrentUser = () => dispatch => {
     })
     .catch(err => {console.log(err); failcb()})
   }
+
+export const GET_JOB_START = "GET_JOB_START";
+export const GET_JOB_SUCCESS = "GET_JOB_SUCCESS";
+export const GET_JOB_FAILURE = "GET_JOB_FAILURE";
+export const GET_JOBS_SUCCESS = "GET_JOBS_SUCCESS";
+export const GET_JOBS_FAILURE = "GET_JOBS_FAILURE";
+
+export const getJob = (id) => dispatch => 
+{
+    dispatch({ type: GET_JOB_START });
+    let url = id >= 0 ? `${SERVER_BASE_URL}/jobs/${id}` : `${SERVER_BASE_URL}/jobs`
+    return axios
+    .get(url)
+    .then(res =>
+    {
+        dispatch({ type: id>=0 ? GET_JOB_SUCCESS :  GET_JOBS_SUCCESS , payload: res.data })
+    })
+    .catch(err => {console.log(err); dispatch({ type: id >= 0 ? GET_JOB_FAILURE :  GET_JOBS_FAILURE });});
+}
