@@ -50,7 +50,7 @@ class CurrentCompanyProfile extends Component {
 
 const mapStateToProps = state => {
 	return {
-		company: state.getUser.currentUser
+		company: state.userReducer.currentUser
 	};
 };
 

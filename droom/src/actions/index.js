@@ -38,6 +38,7 @@ export const register = creds => dispatch => {
         })
 };
 
+//USER PROFILE
 export const GET_USER_START = "GET_USER_START";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILURE = "GET_USER_FAILURE";
@@ -48,6 +49,7 @@ export const getCurrentUser = () => dispatch => {
         .get(`${SERVER_BASE_URL}/profile/seeker`)
         .then(res => {
             console.log(res)
+            localStorage.setItem('userType', 'seeker')
             dispatch({ type: GET_USER_SUCCESS, payload: res.data })
         })
         .catch(err => {
@@ -56,6 +58,7 @@ export const getCurrentUser = () => dispatch => {
                 .get(`${SERVER_BASE_URL}/profile/employer`)
                 .then(res => {
                     console.log(res)
+                    localStorage.setItem('userType', 'employer')
                     dispatch({ type: GET_USER_SUCCESS, payload: res.data })
                 })
                 .catch(err => {
@@ -63,6 +66,38 @@ export const getCurrentUser = () => dispatch => {
                     dispatch({ type: GET_USER_FAILURE, payload: err.response.message })
                 })
         })
+}
+
+export const UPDATE_USER_START = "UPDATE_USER_START";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE";
+
+export const updateCurrentUser = (updatedProfile) => dispatch => {
+    dispatch({ type: UPDATE_USER_START })
+    if (localStorage.getItem('userType') === 'employer') {
+        axiosWithAuth()
+            .put(`${SERVER_BASE_URL}/profile/employer`, updatedProfile)
+            .then(res => {
+                console.log(res)
+                dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data })
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({ type: GET_USER_FAILURE, payload: err.response.message })
+            })
+    } else {
+        axiosWithAuth()
+            .put(`${SERVER_BASE_URL}/profile/seeker`, updatedProfile)
+            .then(res => {
+                console.log(res)
+                console.log('I HAVE ACTUALLY GOTTEN TO THIS POINT')
+                dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data })
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({ type: GET_USER_FAILURE, payload: err.response.message })
+            })
+    }
 }
 
 export const updateInfo = (data, cb) => dispatch => {
