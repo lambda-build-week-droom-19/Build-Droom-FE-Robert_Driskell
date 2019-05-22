@@ -4,6 +4,7 @@ import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
 import { login, getCurrentUser } from "./actions/index"
+import SignUpApp from "./views/SignUp/SignUpApp";
 
 import LoginPage from './routes/LoginPage';
 
@@ -41,6 +42,7 @@ class App extends React.Component {
                 </ul>
                 <Route path="/my-profile" component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
+                <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/protected" component={Protected} />
                 {/* 
                         Commented out routes for debuging
