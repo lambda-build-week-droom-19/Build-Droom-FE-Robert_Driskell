@@ -16,7 +16,7 @@ export const getUser = (state = initialState, action) => {
                 error: '',
             }
         case GET_USER_SUCCESS:
-            console.log(action.payload)
+            // console.log(action.payload)
             return {
                 ...state,
                 gettingUser: false,

@@ -8,6 +8,8 @@ import { login, getCurrentUser } from "./actions/index"
 import LoginPage from './routes/LoginPage';
 
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
+import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -39,7 +41,7 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
-                <Route path="/my-profile" component={CurrentCompanyProfile} />
+                <Route path="/my-profile" component={CurrentSeekerProfile} />
                 <Route path="/public" component={Public} />
                 <PrivateRoute path="/protected" component={Protected} />
                 {/* 
