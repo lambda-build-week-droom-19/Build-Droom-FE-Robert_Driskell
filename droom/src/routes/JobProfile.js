@@ -7,8 +7,8 @@ class JobProfile extends React.Component
 {
     componentWillMount()
     {
-        this.props.getNiches();
-        this.props.getJob(1);
+        console.log(this.props.match.params.id);
+        this.props.getJob(this.props.match.params.id);
     }
 /*     { 
         user_id: integer(references employer id), 
@@ -20,10 +20,10 @@ class JobProfile extends React.Component
     } */
     render()
     {
-        console.log(this.props.currentJob);
-        let obj = this.props.currentJob
-       
-        if(this.props.error || obj === {} || obj === undefined) return <Redirect to="/" />;
+        let obj = this.props.currentJob;
+        console.log(this.props.gettingJob);
+        if(this.props.gettingJob) return <div></div>;
+        if(this.props.error==!"" || obj.job_title === "" || Object.keys(obj).length <= 0 || obj === {} || obj === undefined) return <Redirect to="/" />;
         return(
         <div>
             <h2>{obj.job_title}</h2>

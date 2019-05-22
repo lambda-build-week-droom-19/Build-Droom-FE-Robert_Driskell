@@ -1,7 +1,7 @@
 import { GET_JOB_START, GET_JOB_SUCCESS, GET_JOB_FAILURE, GET_JOBS_SUCCESS, GET_JOBS_FAILURE } from "../actions"
 
 const initialState = {
-    gettingJob: false,
+    gettingJob: true,
     currentJob: {},
     jobs: [],
     error: '',
@@ -36,8 +36,8 @@ export const getJob = (state = initialState, action) => {
         case GET_JOB_FAILURE:
             return {
                 ...state,
-                gettingUser: false,
-                currentUser: {},
+                gettingJob: false,
+                currentJob: {},
                 error: action.payload,
             }        
         default:
