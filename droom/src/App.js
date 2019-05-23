@@ -4,12 +4,12 @@ import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
 import { login, getCurrentUser } from "./actions/index"
+import SignUpApp from "./views/SignUp/SignUpApp";
 
 import LoginPage from './routes/LoginPage';
 
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
-import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
-
+import JobProfile from './routes/JobProfile';import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -41,9 +41,14 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
-                <Route path="/my-profile" component={CurrentSeekerProfile} />
+
+ 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
+                <Route path="/signup" component={SignUpApp} />
+
                 <PrivateRoute path="/protected" component={Protected} />
+                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
+                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -64,13 +69,28 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, { login, getCurrentUser })(App)
 
+const InPrivateRoute = ({component: Component, ... rest}) => {
+    return (
+        <Route
+            {...rest}
+            render={(props) => {
+                if (localStorage.getItem('userToken')) {
+                    return <Redirect to="/" />;
+                } else {
+                    return <Component {...props} />;
+                }
+            }}
+        />
+    );
+}
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={() => {
+            render={(props) => {
                 if (localStorage.getItem('userToken')) {
-                    return <Component />;
+                    return <Component {...props} />;
                 } else {
                     return <Redirect to="/" />;
                 }

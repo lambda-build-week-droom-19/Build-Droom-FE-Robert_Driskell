@@ -39,7 +39,7 @@ class About extends React.Component
                 <input onChange={(e)=> this.handleChange(e)} value={this.state.location} placeholder="Location..." name="location" />
                 <textarea onChange={(e)=> this.handleChange(e)} style={{resize: "none"}} placeholder="Bio..." value={this.state.bio} name="bio" rows="10" cols="50" maxLength="5000" draggable="false" />
             </div>
-            {this.props.index() !== 0 ? <button onClick={()=>this.validate(this.props.prev)}>Prev</button> : ""}
+            {/* this.props.index() !== 0 ? <button onClick={()=>this.validate(this.props.prev)}>Prev</button> : "" */}
             <button onClick={()=>this.validate(this.props.next)}>Next</button>
         </div>
         )
