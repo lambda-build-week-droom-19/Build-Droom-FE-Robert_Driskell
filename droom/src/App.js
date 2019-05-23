@@ -12,9 +12,8 @@ import LoginPage from './routes/LoginPage';
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
 import JobProfile from './routes/JobProfile';
 import NavComponent from "./views/Nav/navComponent.js"
-
+import MatchingApp from './views/matching/MatchingApp';
 import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
-
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -50,7 +49,7 @@ class App extends React.Component {
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
-
+                <PrivateRoute path="/match" component={MatchingApp} />
                 <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
