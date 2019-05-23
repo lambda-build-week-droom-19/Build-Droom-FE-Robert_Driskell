@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import "./sass/reset.scss";
+import "./sass/global.scss";
 import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
@@ -9,7 +10,11 @@ import SignUpApp from "./views/SignUp/SignUpApp";
 import LoginPage from './routes/LoginPage';
 
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
-import JobProfile from './routes/JobProfile';import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+import JobProfile from './routes/JobProfile';
+import NavComponent from "./views/Nav/navComponent.js"
+
+import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -41,8 +46,11 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
- 				<Route path="/my-profile" exact component={CurrentCompanyProfile} />                <Route path="/public" component={Public} />
+                <NavComponent/>
+ 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
+                <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
+
                 <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
