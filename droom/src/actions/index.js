@@ -40,7 +40,6 @@ export const register = (creds,cb) => dispatch => {
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data });
                 cb();
             }).catch(err => {
-                console.log("inside")
                 dispatch({ type: LOGIN_FAILURE, payload: err });
             })
         })
@@ -57,7 +56,6 @@ export const createProfile = (data,type,cb) => dispatch =>
     .then(res=> {
         dispatch({ type: "PASSED", payload: res.data });
         localStorage.setItem("userID", res.data.user_id);
-        console.log(res.data);
         cb();
     }).catch(err => dispatch({ type: "FAILED", payload: err }) );
 }
@@ -71,7 +69,6 @@ export const getCurrentUser = () => dispatch => {
     axiosWithAuth(localStorage.getItem('userID'))
         .get(`${SERVER_BASE_URL}/profile/seeker`)
         .then(res => {
-            console.log(res)
             localStorage.setItem('userType', 'seeker')
             dispatch({ type: GET_USER_SUCCESS, payload: res.data })
         })
@@ -80,7 +77,6 @@ export const getCurrentUser = () => dispatch => {
             axiosWithAuth(localStorage.getItem('userID'))
                 .get(`${SERVER_BASE_URL}/profile/employer`)
                 .then(res => {
-                    console.log(res)
                     localStorage.setItem('userType', 'employer')
                     dispatch({ type: GET_USER_SUCCESS, payload: res.data })
                 })
@@ -122,23 +118,6 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
             })
     }
 }
-
-export const updateInfo = (data, cb) => dispatch => {
-    dispatch({ type: "start-update" });
-    let id = localStorage.getItem('userID');
-    console.log(id);
-    return axiosWithAuth()
-    .post(`${SERVER_BASE_URL}/profile/seeker`, {})
-    .then(res =>
-      {
-          console.log(res.data);
-        cb();
-      })
-      .catch(err => {
-        dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
-        cb();
-      });
-  }
   export const NICHES_SUCCESS = "NICHES_SUCCESS";
 
   export const getNiches = (cb = ()=>{}, failcb = ()=>{}) => dispatch =>
@@ -160,6 +139,8 @@ export const GET_JOB_FAILURE = "GET_JOB_FAILURE";
 export const GET_JOBS_SUCCESS = "GET_JOBS_SUCCESS";
 export const GET_JOBS_FAILURE = "GET_JOBS_FAILURE";
 export const SET_JOB_START = "SET_JOB_START"
+export const SET_JOB_SUCCESS = "SET_JOB_SUCCESS"
+export const SET_JOB_FAILURE = "SET_JOB_FAILURE"
 
 export const getJob = (id) => dispatch => 
 {
@@ -174,8 +155,32 @@ export const getJob = (id) => dispatch =>
     .catch(err => {console.log(err); dispatch({ type: id >= 0 ? GET_JOB_FAILURE :  GET_JOBS_FAILURE });});
 }
 
-// export const changeJob(id, data) => dispatch =>
-// {
-//     return axiosWithAuth()
-//     .put()
-// }
+export const changeJob = (data,id) => dispatch =>
+{
+    return axiosWithAuth()
+    .put(`${SERVER_BASE_URL}/jobs/${id}`, data)
+    .then(res =>
+         {
+            console.log(res.data);
+            dispatch({ type: SET_JOB_SUCCESS, payload: res.data })
+        })
+    .catch(err => {console.log(err); dispatch({ type: SET_JOB_FAILURE });});
+
+}
+
+
+export const GET_MATCHES_START = "GET_MATCHES_START"
+export const GET_MATCHES_SUCCESS = "GET_MATCHES_SUCCESS"
+export const GET_MATCHES_FAILURE = "GET_MATCHES_FAILURE"
+
+export const getMatches = (type) => dispatch =>
+{
+    dispatch({type: GET_MATCHES_START});
+    axios
+    .get(`${SERVER_BASE_URL}/jobs/1`)
+    .then(res =>
+        {
+            dispatch({type: GET_MATCHES_SUCCESS, payload: [res.data]});
+        })
+    .catch(err => {console.log(err); dispatch({ type: GET_MATCHES_FAILURE });});
+}
