@@ -52,7 +52,7 @@ export const createProfile = (data,cb) => dispatch =>
     let name = data.user_type === 0 ? "seeker" : "employer";
     let id = localStorage.getItem("userID");
     dispatch({ type: "START" });
-    axiosWithAuth().put(`${SERVER_BASE_URL}/profile/${"seeker"}`,  {})
+    axiosWithAuth().put(`${SERVER_BASE_URL}/profile/${"seeker"}`,  {first_name: data.first_name, last_name: data.last_name})
     .then(res=> {
         dispatch({ type: "PASSED", payload: res.data });
         localStorage.setItem("userID", res.data.user_id);

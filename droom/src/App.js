@@ -44,7 +44,8 @@ class App extends React.Component {
  				<Route path="/my-profile" exact component={CurrentCompanyProfile} />                <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/protected" component={Protected} />
-                <Route path="/job/:id" render={props => <JobProfile {...props}/>} />
+                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
+                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -65,13 +66,28 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, { login, getCurrentUser })(App)
 
+const InPrivateRoute = ({component: Component, ... rest}) => {
+    return (
+        <Route
+            {...rest}
+            render={(props) => {
+                if (localStorage.getItem('userToken')) {
+                    return <Redirect to="/" />;
+                } else {
+                    return <Component {...props} />;
+                }
+            }}
+        />
+    );
+}
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={() => {
+            render={(props) => {
                 if (localStorage.getItem('userToken')) {
-                    return <Component />;
+                    return <Component {...props} />;
                 } else {
                     return <Redirect to="/" />;
                 }
