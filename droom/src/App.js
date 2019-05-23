@@ -41,8 +41,11 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
- 				<Route path="/my-profile" exact component={CurrentCompanyProfile} />                <Route path="/public" component={Public} />
+
+ 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
+                <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
+
                 <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
