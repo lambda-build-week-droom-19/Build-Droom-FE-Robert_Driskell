@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect} from "react-router-dom"
 import {connect} from "react-redux";
-import {getJob,getNiches} from "../actions";
+import {getJob,getNiches,changeJob} from "../actions";
 
 class JobProfile extends React.Component
 {
@@ -13,7 +13,7 @@ class JobProfile extends React.Component
         this.editting = props.match.params.edit === "edit";
         this.owner = false;
     }
-    
+
     componentWillMount()
     {
         this.props.getJob(this.props.match.params.id);
@@ -21,24 +21,38 @@ class JobProfile extends React.Component
     didfetch = true;
     componentWillUpdate()
     {
-        if(this.didfetch)
+        if(this.didfetch && Object.keys(this.props.currentJob).length !== 0)
         {
             this.setState({...this.props.currentJob});
             this.didfetch = false;
         }
     }
-/*     { 
-        user_id: integer(references employer id), 
-        job_title: string, 
-        location: string, 
-        requirements: string, 
-        niche: integer(references niche id), 
-        seen: boolean 
-    } */
-
-    handleChange(e)
+    valitdateNewElement(arry)
     {
-        this.setState({...this.state, [e.target.name] : e.target.value});
+        if(!arry.length) return true;
+        return arry[arry.length-1] !== ""
+    }
+/*     { 
+        job_title: string,
+        location: string,
+        pay_type: string,
+        starting_pay: string,
+        description: string,
+        responsibilities: [array of responsibilities],
+        required_skills: [array of skills],
+        niche: integer(references niche id),
+        appliers: [array of seeker user_ids that have said yes],
+        confirmed: [array of seeker user_ids that are confirmed by employer],
+        seen: boolean,
+    } */
+    handleUpdate()
+    {
+        if(this.editting)
+            this.props.changeJob(this.state, this.props.match.params.id);
+    }
+    handleChange(name, value)
+    {
+        this.setState({...this.state, [name] : value});
     }
     render()
     {
@@ -50,14 +64,33 @@ class JobProfile extends React.Component
             if(!this.owner) return <Redirect to={`/job/${this.props.match.params.id}`} />
         return(
             <div>
+                 {this.owner ? <button onClick={()=> {this.handleUpdate(); this.props.history.push(`/job/${this.props.match.params.id}`)}}>Finished</button> : ""}
                 <div>Job Title</div>
-                <input onChange={(e)=> this.handleChange(e)} name="job_title" value={this.state.job_title}/>
+                <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="job_title" value={this.state.job_title}/>
                 <div>Location</div>
-                <input onChange={(e)=> this.handleChange(e)} name="job_title" value={this.state.job_title}/>
+                <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="location" value={this.state.location}/>
                 <div>Staring Pay</div>
-                <input onChange={(e)=> this.handleChange(e)} name="job_title" value={this.state.job_title}/>
+                <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="starting_pay" value={this.state.starting_pay}/>
                 <div>Description</div>
-                <input onChange={(e)=> this.handleChange(e)} name="job_title" value={this.state.job_title}/>
+                <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="description" value={this.state.description}/>
+                <div>Responsibilities</div>
+                <button onClick={()=>{let arry = this.state.responsibilities ? this.state.responsibilities : []; if(!this.valitdateNewElement(arry)) return; arry.push(""); this.handleChange("responsibilities",arry)}}>New Responsibility</button>
+                { this.state.responsibilities && this.state.responsibilities.length ? this.state.responsibilities.map((x,i,a)=>
+                    {
+                        return <div>
+                            <input key={i} onChange={(e)=>{let arry = a; arry[i] = e.target.value; this.handleChange(e.target.name, arry)} } placeholder="text..." name="responsibilities" value={x}/>
+                            <button onClick={(e) => {let arry = a; arry.splice(i,1); this.handleChange(e.target.name, arry);}}>-</button>
+                        </div>
+                    }) : <div>{this.handleChange("responsibilities", [""]) ? "" : "" }</div>}
+                <div>Required Skills</div>
+                <button onClick={()=>{let arry = this.state.required_skills ? this.state.required_skills : []; if(!this.valitdateNewElement(arry)) return; arry.push(""); this.handleChange("required_skills",arry)}}>New Skill</button>
+                { this.state.required_skills && this.state.required_skills.length ? this.state.required_skills.map((x,i,a)=>
+                    {
+                        return <div>
+                            <input key={i} onChange={(e)=>{let arry = a; arry[i] = e.target.value; this.handleChange(e.target.name, arry)} } placeholder="text..." name="required_skills" value={x}/>
+                            <button onClick={(e) => {let arry = a; arry.splice(i,1); this.handleChange(e.target.name, arry);}}>-</button>
+                        </div>
+                    }) : <div>{this.handleChange("required_skills", [""]) ? "" : "" }</div>}
             </div>
         );
         }
@@ -75,7 +108,7 @@ class JobProfile extends React.Component
             <h5>Responsibilities</h5>
             <ul>
                 {   
-                obj.responsibilites && obj.responsibilites.length ? obj.responsibilites.map(x=>
+                obj.responsibilities && obj.responsibilities.length ? obj.responsibilities.map(x=>
                     <li>
                         {x}
                     </li>    
@@ -94,11 +127,17 @@ class JobProfile extends React.Component
 
         </div>);
     }
+    componentWillUnmount()
+    {
+       this.handleUpdate();
+    }
 }
+
+
 
 const mapStateToProps = state =>
 {
     return {...state.getJob}
 }
 
-export default connect(mapStateToProps, {getJob, getNiches})(JobProfile);
+export default connect(mapStateToProps, {getJob, getNiches,changeJob})(JobProfile);

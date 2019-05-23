@@ -26,19 +26,19 @@ class PastExperience extends React.Component
     {
         if(!this.validateItem(this.state.past_experience[this.state.past_experience.length-1])) return
         let arry = this.state.past_experience;
-        arry.push({company_name: "", job_title: "", description: ""})
+        arry.push({name: "", title: "", description: ""})
         this.setState({past_experience: arry});
     }
     removeItem(i)
     {
         let arry = this.state.past_experience;
         arry.splice(i,1);
-        if(arry.length === 0) arry.push({company_name: "", job_title: "", description: ""})
+        if(arry.length === 0) arry.push({name: "", title: "", description: ""})
         this.setState({past_experience: arry});
     }
     validateItem(obj)
     {
-        return obj.company_name !== "" && obj.job_title !== "" && obj.description !== ""
+        return obj.name !== "" && obj.title !== "" && obj.description !== ""
     }
     validate(cb)
     {
@@ -60,8 +60,8 @@ class PastExperience extends React.Component
                 {this.state.past_experience.map((x,i) => 
                 (
                 <div key={i}>
-                <input name="company_name"key={`1:${i}`} id={i} value={x.company_name} placeholder="Company..." onChange={(e)=>this.handleChange(e)}/>
-                <input name="job_title" key={`2:${i}`} id={i} value={x.job_title} placeholder="Job Title..." onChange={(e)=>this.handleChange(e)}/>
+                <input name="name"key={`1:${i}`} id={i} value={x.name} placeholder="Company..." onChange={(e)=>this.handleChange(e)}/>
+                <input name="title" key={`2:${i}`} id={i} value={x.title} placeholder="Job Title..." onChange={(e)=>this.handleChange(e)}/>
                 <input name="description" key={`3:${i}`} id={i} value={x.description} placeholder="Description..." onChange={(e)=>this.handleChange(e)}/>
                 {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={(i)=> this.removeItem(i)}>x</button>/*maybe add this later*/}
                 </div>
