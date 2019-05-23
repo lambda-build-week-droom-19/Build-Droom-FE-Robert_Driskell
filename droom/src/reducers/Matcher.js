@@ -1,4 +1,4 @@
-import {GET_MATCHES_START, GET_MATCHES_SUCCESS, GET_MATCHES_FAILURE} from "../actions"
+import {GET_MATCHES_START, GET_MATCHES_SUCCESS, GET_MATCHES_FAILURE, ACCEPT_MATCH, REJECT_MATCH} from "../actions"
 
 
 const initialState = {
@@ -15,18 +15,29 @@ export const matcher = (state = initialState, action) => {
                 gettingMatch: true,
                 error: '',
             }
+
         case GET_MATCHES_SUCCESS:
             return {
                 ...state,
                 gettingMatch: false,
-                currentMatches: [...state.currentMatches, ...action.payload],
+                currentMatches: [...state.currentMatches,...action.payload],
                 error: '',
             }
+
         case  GET_MATCHES_FAILURE:
             return {
                 ...state,
                 gettingMatch: false,
                 error: action.payload,
+            }
+
+        case ACCEPT_MATCH:
+        case REJECT_MATCH:
+            let arry = state.currentMatches;
+            arry.shift();
+            return {
+                ...state,
+                currentMatches: [...arry]
             }
         default:
             return state;

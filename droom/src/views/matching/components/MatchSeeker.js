@@ -1,20 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getMatches} from "../../../actions";
+import {getMatches,swipeMatch} from "../../../actions";
 
 class MatchSeeker extends React.Component
 {
-    usertype = "";
     componentDidMount()
     {
-        this.props.getMatches(0);
     }
     render()
     {
         console.log(this.props.currentMatches);
-        if(this.props.gettingMatch) return <div>Loading...</div>
+        if(this.props.currentMatches.length < 5 && !this.props.gettingMatch){this.props.getMatches(0); console.log(!this.props.gettingMatch)}
+        if(this.props.gettingMatch && this.props.currentMatches.length === 0) return <div>Loading...</div>
         if(this.props.currentMatches.length === 0) return <div>ERROR</div>
-        return <MatchProfile data={this.props.currentMatches[0]} />
+        
+        return (
+            <div>
+                <MatchProfile data={this.props.currentMatches[0]} />
+            </div>
+        )
     }
 }
 const mapStateToProps = state => 
@@ -22,7 +26,7 @@ const mapStateToProps = state =>
     return { ...state.matcher}
 }
 
-export default connect(mapStateToProps, {getMatches})(MatchSeeker);
+export default connect(mapStateToProps, {getMatches, swipeMatch})(MatchSeeker);
 
 
 const MatchProfile = props =>
@@ -31,7 +35,7 @@ const MatchProfile = props =>
     <div>
         <div>
             <div> {/*Header*/}
-                <div>{"Company Name"}</div>
+                <div>{"Company Name"+props.data.id}</div>
                 <div>{props.data.job_title}</div>
             </div>
             <div/> {/* Vertical line*/}

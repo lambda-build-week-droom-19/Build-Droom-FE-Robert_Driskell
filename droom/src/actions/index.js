@@ -169,18 +169,32 @@ export const changeJob = (data,id) => dispatch =>
 }
 
 
-export const GET_MATCHES_START = "GET_MATCHES_START"
-export const GET_MATCHES_SUCCESS = "GET_MATCHES_SUCCESS"
-export const GET_MATCHES_FAILURE = "GET_MATCHES_FAILURE"
+export const GET_MATCHES_START = "GET_MATCHES_START";
+export const GET_MATCHES_SUCCESS = "GET_MATCHES_SUCCESS";
+export const GET_MATCHES_FAILURE = "GET_MATCHES_FAILURE";
+export const ACCEPT_MATCH = "ACCEPT_MATCH";
+export const REJECT_MATCH = "REJECT_MATCH";
 
 export const getMatches = (type) => dispatch =>
 {
     dispatch({type: GET_MATCHES_START});
+    let name = type === 0 ?"jobs": "jobs"
     axios
-    .get(`${SERVER_BASE_URL}/jobs/`)
+    .get(`${SERVER_BASE_URL}/${name}/`)
     .then(res =>
         {
             dispatch({type: GET_MATCHES_SUCCESS, payload: res.data});
         })
     .catch(err => {console.log(err); dispatch({ type: GET_MATCHES_FAILURE });});
+}
+
+export const swipeMatch = (swipe,id,user) => dispatch =>
+{
+    dispatch({type: swipe===1 ? ACCEPT_MATCH : REJECT_MATCH});
+/*     if(user.seen.includes(parseInt(id))) return;
+    users.seen.push(parseInt(id));
+    return axiosWithAuth()
+    .put(`${SERVER_BASE_URL}/profile/seeker`, user)
+    .then()
+    .catch() */
 }
