@@ -15,6 +15,9 @@ import NavComponent from "./views/Nav/navComponent.js"
 import MatchingApp from './views/matching/MatchingApp';
 import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
 
+import initialPage from './views/InitialPage/initialPage.js';
+
+
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
@@ -34,6 +37,7 @@ class App extends React.Component {
             <div className="App">
                 <button onClick={this.logout}>LOGOUT</button>
                 <Route exact path="/" component={LoginPage} />
+                <Route exact path="/intial" component={initialPage} />
                 <ul>
                     <li key="1">
                         <Link to="/public">Public Page</Link>
@@ -44,8 +48,11 @@ class App extends React.Component {
                     <li key="3">
                         <Link to="/my-profile">My Profile</Link>
                     </li>
+                    <li>
+                        <Link to="/intial">Initial Page</Link>
+                    </li>
                 </ul>
-                <NavComponent/>
+                {/* <NavComponent/> */}
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
