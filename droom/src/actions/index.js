@@ -177,10 +177,10 @@ export const getMatches = (type) => dispatch =>
 {
     dispatch({type: GET_MATCHES_START});
     axios
-    .get(`${SERVER_BASE_URL}/jobs/1`)
+    .get(`${SERVER_BASE_URL}/jobs/`)
     .then(res =>
         {
-            dispatch({type: GET_MATCHES_SUCCESS, payload: [res.data]});
+            dispatch({type: GET_MATCHES_SUCCESS, payload: res.data});
         })
     .catch(err => {console.log(err); dispatch({ type: GET_MATCHES_FAILURE });});
 }
