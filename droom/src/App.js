@@ -9,7 +9,11 @@ import SignUpApp from "./views/SignUp/SignUpApp";
 import LoginPage from './routes/LoginPage';
 
 import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
-import JobProfile from './routes/JobProfile';import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+import JobProfile from './routes/JobProfile';
+import NavComponent from "./views/Nav/navComponent.js"
+
+import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
@@ -41,7 +45,7 @@ class App extends React.Component {
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
-
+                <NavComponent/>
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
