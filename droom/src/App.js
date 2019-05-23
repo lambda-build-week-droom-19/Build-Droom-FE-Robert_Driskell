@@ -31,13 +31,13 @@ class App extends React.Component {
                 <button onClick={this.logout}>LOGOUT</button>
                 <Route exact path="/" component={LoginPage} />
                 <ul>
-                    <li>
+                    <li key="1">
                         <Link to="/public">Public Page</Link>
                     </li>
-                    <li>
+                    <li key="2">
                         <Link to="/protected">Protected Page</Link>
                     </li>
-                    <li>
+                    <li key="3">
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                 </ul>
