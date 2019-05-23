@@ -26,6 +26,7 @@ export const login = creds => dispatch => {
 export const register = (creds,cb) => dispatch => {
     dispatch({ type: GET_USER_START });
     let cr = { username: creds.username, password: creds.password, user_type: creds.user_type };
+    let name = creds.user_type === 0 ? "seeker" : "employer";
     return axios
         .post(`${SERVER_BASE_URL}/auth/register`, cr)
         .then(res => {
@@ -33,30 +34,28 @@ export const register = (creds,cb) => dispatch => {
             console.log(res.data);
             localStorage.setItem('userID', res.data.id);
             axiosWithAuth()
-            .post(`${SERVER_BASE_URL}/profile/seeker`,  {user_id : res.data.id})
+            .post(`${SERVER_BASE_URL}/profile/${name}`,  {user_id : res.data.id})
             .then(res2=> {
                 localStorage.setItem("userID", res2.data.user_id);
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+                cb();
             }).catch(err => {
                 dispatch({ type: LOGIN_FAILURE, payload: err });
             })
-            cb();
         })
         .catch(err => {
             dispatch({ type: LOGIN_FAILURE, payload: err });
         })
 };
 
-export const createProfile = (data,cb) => dispatch =>
+export const createProfile = (data,type,cb) => dispatch =>
 {
-    let name = data.user_type === 0 ? "seeker" : "employer";
-    let id = localStorage.getItem("userID");
+    let name = type === 0 ? "seeker" : "employer";
     dispatch({ type: "START" });
-    axiosWithAuth().put(`${SERVER_BASE_URL}/profile/${"seeker"}`,  {first_name: data.first_name, last_name: data.last_name})
+    axiosWithAuth().put(`${SERVER_BASE_URL}/profile/${name}`,  data)
     .then(res=> {
         dispatch({ type: "PASSED", payload: res.data });
         localStorage.setItem("userID", res.data.user_id);
-        console.log("COMPLETED");
         cb();
     }).catch(err => dispatch({ type: "FAILED", payload: err }) );
 }
@@ -70,7 +69,6 @@ export const getCurrentUser = () => dispatch => {
     axiosWithAuth(localStorage.getItem('userID'))
         .get(`${SERVER_BASE_URL}/profile/seeker`)
         .then(res => {
-            console.log(res)
             localStorage.setItem('userType', 'seeker')
             dispatch({ type: GET_USER_SUCCESS, payload: res.data })
         })
@@ -79,7 +77,6 @@ export const getCurrentUser = () => dispatch => {
             axiosWithAuth(localStorage.getItem('userID'))
                 .get(`${SERVER_BASE_URL}/profile/employer`)
                 .then(res => {
-                    console.log(res)
                     localStorage.setItem('userType', 'employer')
                     dispatch({ type: GET_USER_SUCCESS, payload: res.data })
                 })
@@ -121,6 +118,7 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
     }
 }
 
+//GET JOBS FROM A SPECIFIC EMPLOYER
 export const GET_EMPLOYER_JOBS_START = "GET_EMPLOYER_JOBS_START"
 export const GET_EMPLOYER_JOBS_SUCCESS = "GET_EMPLOYER_JOBS_SUCCESS"
 export const GET_EMPLOYER_JOBS_FAILURE = "GET_EMPLOYER_JOBS_FAILURE"
@@ -175,6 +173,9 @@ export const GET_JOB_SUCCESS = "GET_JOB_SUCCESS";
 export const GET_JOB_FAILURE = "GET_JOB_FAILURE";
 export const GET_JOBS_SUCCESS = "GET_JOBS_SUCCESS";
 export const GET_JOBS_FAILURE = "GET_JOBS_FAILURE";
+export const SET_JOB_START = "SET_JOB_START"
+export const SET_JOB_SUCCESS = "SET_JOB_SUCCESS"
+export const SET_JOB_FAILURE = "SET_JOB_FAILURE"
 
 export const getJob = (id) => dispatch => 
 {
@@ -187,4 +188,48 @@ export const getJob = (id) => dispatch =>
         dispatch({ type: id>=0 ? GET_JOB_SUCCESS :  GET_JOBS_SUCCESS , payload: res.data })
     })
     .catch(err => {console.log(err); dispatch({ type: id >= 0 ? GET_JOB_FAILURE :  GET_JOBS_FAILURE });});
+}
+
+export const changeJob = (data,id) => dispatch =>
+{
+    return axiosWithAuth()
+    .put(`${SERVER_BASE_URL}/jobs/${id}`, data)
+    .then(res =>
+         {
+            console.log(res.data);
+            dispatch({ type: SET_JOB_SUCCESS, payload: res.data })
+        })
+    .catch(err => {console.log(err); dispatch({ type: SET_JOB_FAILURE });});
+
+}
+
+
+export const GET_MATCHES_START = "GET_MATCHES_START";
+export const GET_MATCHES_SUCCESS = "GET_MATCHES_SUCCESS";
+export const GET_MATCHES_FAILURE = "GET_MATCHES_FAILURE";
+export const ACCEPT_MATCH = "ACCEPT_MATCH";
+export const REJECT_MATCH = "REJECT_MATCH";
+
+export const getMatches = (type) => dispatch =>
+{
+    dispatch({type: GET_MATCHES_START});
+    let name = type === 0 ?"jobs": "jobs"
+    axios
+    .get(`${SERVER_BASE_URL}/${name}/`)
+    .then(res =>
+        {
+            dispatch({type: GET_MATCHES_SUCCESS, payload: res.data});
+        })
+    .catch(err => {console.log(err); dispatch({ type: GET_MATCHES_FAILURE });});
+}
+
+export const swipeMatch = (swipe,id,user) => dispatch =>
+{
+    dispatch({type: swipe===1 ? ACCEPT_MATCH : REJECT_MATCH});
+/*     if(user.seen.includes(parseInt(id))) return;
+    users.seen.push(parseInt(id));
+    return axiosWithAuth()
+    .put(`${SERVER_BASE_URL}/profile/seeker`, user)
+    .then()
+    .catch() */
 }
