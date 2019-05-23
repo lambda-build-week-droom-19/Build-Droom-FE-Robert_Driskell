@@ -29,16 +29,16 @@ class Username extends React.Component
             }
           });
     }
-    authenticate(cb)
+    authenticate(type,cb)
     {
         if(this.state.credentials==={} || this.state.credentials.password === "" || this.state.credentials.username === ""  ) return;
         if(this.state.credentials.password !== this.state.credentials.confirm) return;
-        this.props.register(this.state.credentials,cb);
+        this.props.setData({user_type: parseInt(type)})
+        this.props.register({ username: this.state.credentials.username, password: this.state.credentials.password, user_type: parseInt(type) }, cb);
     }
     render()
     {
         //bypass
-        {this.props.next()}
         return (
         <div style={{margin: "0 auto", maxWidth:"200px"}}>
             <div className="signin-Input" style={{display: "flex", flexDirection: "column"}}>
@@ -47,7 +47,9 @@ class Username extends React.Component
                 <input name="confirm" placeholder="Comfirm" onChange={this.handleChange}/>
             </div> 
             {this.props.index() !== 0 ? <button onClick={()=>{this.authenticate(this.props.prev)}}>Prev</button> : ""}
-            <button onClick={()=>{this.authenticate(this.props.next)}}>Next</button>
+            <button onClick={()=> {this.authenticate(0, this.props.next)}}>Seeker</button>
+            <button onClick={()=> {this.authenticate(1, this.props.next)}}>Empoyeer</button>
+            <button onClick={()=> this.props.next()}> bypass</button>
         </div>
         )
     }
