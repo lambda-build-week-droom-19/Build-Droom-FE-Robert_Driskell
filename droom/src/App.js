@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import "./sass/reset.scss";
+import "./sass/global.scss";
 import { axiosWithAuth } from './utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
