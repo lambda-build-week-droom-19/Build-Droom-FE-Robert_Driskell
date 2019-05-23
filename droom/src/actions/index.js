@@ -90,7 +90,6 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
             .put(`${SERVER_BASE_URL}/profile/seeker`, updatedProfile)
             .then(res => {
                 console.log(res)
-                console.log('I HAVE ACTUALLY GOTTEN TO THIS POINT')
                 dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data })
             })
             .catch(err => {
@@ -98,6 +97,24 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
                 dispatch({ type: GET_USER_FAILURE, payload: err.response.message })
             })
     }
+}
+
+export const GET_EMPLOYER_JOBS_START = "GET_EMPLOYER_JOBS_START"
+export const GET_EMPLOYER_JOBS_SUCCESS = "GET_EMPLOYER_JOBS_SUCCESS"
+export const GET_EMPLOYER_JOBS_FAILURE = "GET_EMPLOYER_JOBS_FAILURE"
+
+export const getEmployerJobs = (id) => dispatch => {
+    dispatch({ type: GET_EMPLOYER_JOBS_START })
+    return axios
+        .get(`${SERVER_BASE_URL}/jobs/employer/${id}`)
+        .then(res => {
+            console.log(res)
+            dispatch({ type: GET_EMPLOYER_JOBS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({ type: GET_EMPLOYER_JOBS_FAILURE, payload: err.response.message })
+        })
 }
 
 export const updateInfo = (data, cb) => dispatch => {
