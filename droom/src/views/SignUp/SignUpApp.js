@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
-import {register, updateInfo} from "../../actions"
+import {register, createProfile} from "../../actions"
 
 import PastExper from "./Components/SIgnUpPastExperience"
 import About from "./Components/SignUpAbout"
@@ -18,12 +18,12 @@ class SignUpApp extends React.Component
         super(props)
         this.state =
         {
-            userType: 0,
+            user_type: 0,
             screenIndex: 0 // is the screen we are on, this becomes -1 we will break and send the info
         }
         this.data = {
-            userType: 0,
-            seeker_id: -1,
+            user_type: 0,
+            //user_id: -1,
             first_name: "",
             last_name: "",
             location: "",
@@ -53,11 +53,11 @@ class SignUpApp extends React.Component
     }
     prevElement()
     {
-        this.setState({...this.state, screenIndex: this.state > 1 ? this.state.screenIndex-1 : 0 })
+        this.setState({...this.state, screenIndex: this.state.screenIndex > 1 ? this.state.screenIndex - 1 : 0 })
     }
     nextElement()
     {
-        this.setState({...this.state, screenIndex: this.state.screenIndex < this.view[this.data.userType].length-1 ? this.state.screenIndex+1 : -1 })
+        this.setState({...this.state, screenIndex: this.state.screenIndex < this.view[this.data.user_type].length-1 ? this.state.screenIndex+1 : -1 })
     }
     getIndex()
     {
@@ -81,13 +81,16 @@ class SignUpApp extends React.Component
         if(this.state.screenIndex < 0 )
         {
             //call some code here to start the data upload
-            this.props.updateInfo(this.data, ()=>this.setState({...this.state, redirect : true}))
+            this.data.user_id = parseInt(localStorage.getItem('userID'));
+            this.data.timestamp = Date.now();
+            console.log(this.props.niche);
+            this.props.createProfile(this.data, ()=>this.props.history.push({pathname: "/protected"}))
         }
         if(this.state.rederect) return <Redirect to={{pathname: "/protected"}} />
         return(
         <div>
             
-            {this.view[this.data.userType][this.state.screenIndex]}
+            {this.view[this.data.user_type][this.state.screenIndex]}
         </div>
         )
     }
@@ -101,4 +104,4 @@ const mapStateToProps = state =>
     }
 }
 
-export default connect(mapStateToProps, {register,updateInfo})(SignUpApp)
+export default connect(mapStateToProps, {register,createProfile})(SignUpApp)
