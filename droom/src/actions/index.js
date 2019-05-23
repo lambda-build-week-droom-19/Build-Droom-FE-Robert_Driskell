@@ -109,7 +109,6 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
             .put(`${SERVER_BASE_URL}/profile/seeker`, updatedProfile)
             .then(res => {
                 console.log(res)
-                console.log('I HAVE ACTUALLY GOTTEN TO THIS POINT')
                 dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data })
             })
             .catch(err => {
@@ -118,6 +117,42 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
             })
     }
 }
+
+//GET JOBS FROM A SPECIFIC EMPLOYER
+export const GET_EMPLOYER_JOBS_START = "GET_EMPLOYER_JOBS_START"
+export const GET_EMPLOYER_JOBS_SUCCESS = "GET_EMPLOYER_JOBS_SUCCESS"
+export const GET_EMPLOYER_JOBS_FAILURE = "GET_EMPLOYER_JOBS_FAILURE"
+
+export const getEmployerJobs = (id) => dispatch => {
+    dispatch({ type: GET_EMPLOYER_JOBS_START })
+    return axios
+        .get(`${SERVER_BASE_URL}/jobs/employer/${id}`)
+        .then(res => {
+            console.log(res)
+            dispatch({ type: GET_EMPLOYER_JOBS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({ type: GET_EMPLOYER_JOBS_FAILURE, payload: err.response.message })
+        })
+}
+
+export const updateInfo = (data, cb) => dispatch => {
+    dispatch({ type: "start-update" });
+    let id = localStorage.getItem('userID');
+    console.log(id);
+    return axiosWithAuth()
+    .post(`${SERVER_BASE_URL}/profile/seeker`, {})
+    .then(res =>
+      {
+          console.log(res.data);
+        cb();
+      })
+      .catch(err => {
+        dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
+        cb();
+      });
+  }
   export const NICHES_SUCCESS = "NICHES_SUCCESS";
 
   export const getNiches = (cb = ()=>{}, failcb = ()=>{}) => dispatch =>
