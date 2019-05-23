@@ -1,19 +1,30 @@
 import React from "react"
-import Button from "../../Button"
+import Button from "../../Button";
+import {connect} from "react-redux";
+import {createProfile} from "../../../actions"
 
 class AccountType extends React.Component
 {
-
+    authenticate(type,cb)
+    {
+        this.props.createProfile(type,cb);
+        this.props.setData({userType: type})
+    }
     render()
     {
+        {this.props.next()}
         return (
         <div>
             <div>AccountType</div>
-            <button onClick={()=> {this.props.setData({userType: 0}); this.props.next()}}>Seeker</button>
-            <button onClick={()=> {this.props.setData({userType: 1}); this.props.next()}}>Empoyeer</button>
+           
         </div>
         )
     }
 }
 
-export default AccountType;
+const mapStateToProps = state =>
+{
+    return{...state};
+}
+
+export default connect(mapStateToProps, {createProfile})(AccountType)
