@@ -121,6 +121,7 @@ export const updateCurrentUser = (updatedProfile) => dispatch => {
     }
 }
 
+//GET JOBS FROM A SPECIFIC EMPLOYER
 export const GET_EMPLOYER_JOBS_START = "GET_EMPLOYER_JOBS_START"
 export const GET_EMPLOYER_JOBS_SUCCESS = "GET_EMPLOYER_JOBS_SUCCESS"
 export const GET_EMPLOYER_JOBS_FAILURE = "GET_EMPLOYER_JOBS_FAILURE"
