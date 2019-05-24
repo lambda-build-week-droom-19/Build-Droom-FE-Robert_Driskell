@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { Link } from 'react-router-dom';
 
-import { getCurrentUser, updateCurrentUser } from '../actions/index';
+import { getCurrentUser, updateCurrentUser, getEmployerJobs, SERVER_BASE_URL } from '../actions/index';
+
+import './CurrentCompanyProfile.scss'
 
 class CurrentCompanyProfile extends Component {
     state = {
@@ -10,6 +14,7 @@ class CurrentCompanyProfile extends Component {
         updatedProfile: {
             name: 'string',
             about: 'string',
+            location: 'string',
             contact_info: {
                 phone_number: 'string',
                 email: 'string'
@@ -29,6 +34,7 @@ class CurrentCompanyProfile extends Component {
                 updatedProfile: { ...this.props.company },
                 init: true,
             })
+            this.props.getEmployerJobs(this.props.company.user_id);
         }
     }
 
@@ -99,12 +105,59 @@ class CurrentCompanyProfile extends Component {
         });
     };
 
+    createJob = e => {
+        e.preventDefault();
+        axiosWithAuth(localStorage.getItem('userID'))
+            .post(`${SERVER_BASE_URL}/jobs`)
+            .then(res => {
+                console.log('CREATE JOB')
+                console.log(res)
+                this.props.history.push(`jobs/${res.data.id}`)
+            })
+            .catch(err => {
+                console.log('CREATE JOB ERROR')
+                console.log(err)
+            })
+    }
+
+    deleteJob = id => {
+        console.log(id);
+        axiosWithAuth(localStorage.getItem('userID'))
+            .delete(`${SERVER_BASE_URL}/jobs/${id}`)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        this.props.getEmployerJobs(this.props.company.user_id);
+    }
+
+    handleSocialMediaChanges = e => {
+        this.setState({
+            updatedProfile: {
+                ...this.state.updatedProfile,
+                social_media: {
+                    ...this.state.updatedProfile.social_media,
+                    [e.target.name]: e.target.value
+                }
+            }
+        });
+    };
+
     render() {
+        if (!this.props.company.name) {
+            return <div>LOADING</div>
+        }
         return (
-            <>
+            <div className="company">
+                <Link to="/my-profile/accepted">Accepted</Link>
+                <div className="img">
+                    <h1>{this.props.company.name.charAt(0)}</h1>
+                </div>
                 <div className="name">
                     {!this.state.edit ? (<>
-                        <h1>{this.props.company.name}</h1>
+                        <h3>{this.props.company.name}</h3>
                     </>) : (
                             <form onSubmit={this.updateUser}>
                                 <input
@@ -117,10 +170,34 @@ class CurrentCompanyProfile extends Component {
                             </form>
                         )}
                 </div>
-                {/* LOCATION */}
+                <div className="location">
+                    {!this.state.edit ? (<>
+                        <h3>{this.props.company.location}</h3>
+                    </>) : (
+                            <form onSubmit={this.updateUser}>
+                                <input
+                                    name="location"
+                                    type="text"
+                                    value={this.state.updatedProfile.location}
+                                    onChange={this.handleChanges}
+                                />
+                                <input type="submit" style={{ display: 'none' }} />
+                            </form>
+                        )}
+                </div>
+                {!this.state.edit ? (
+                    <div className='edit-btn'>
+                        <input type="button" value="EDIT" onClick={this.edit} />
+                    </div>
+                ) : (
+                        <form onSubmit={this.updateUser}>
+                            <input type="submit" value="SUBMIT" />
+                            <input type="button" value="CANCEL" onClick={this.cancel} />
+                        </form>
+                    )}
                 <div className="about">
                     {!this.state.edit ? (<>
-                        <h3>About</h3>
+                        <strong><p>About</p></strong>
                         <p>{this.props.company.about}</p>
                     </>) : (
                             <form onSubmit={this.updateUser}>
@@ -137,7 +214,7 @@ class CurrentCompanyProfile extends Component {
                 {this.props.company.contact_info &&
                     <div className="contact">
                         {!this.state.edit ? (<>
-                            <h3>Contact Info</h3>
+                            <strong><p>Contact Info</p></strong>
                             <p>{this.props.company.contact_info.phone}</p>
                             <p>{this.props.company.contact_info.email}</p>
                         </>) : (
@@ -160,7 +237,51 @@ class CurrentCompanyProfile extends Component {
                     </div>
                 }
                 <div className="social">
-                    I DON'T KNOW HOW TO HANDLE SOCIAL MEDIA
+                    {this.props.company.social_media && (<>
+                        {!this.state.edit ? (
+                            <>
+                                {this.props.company.social_media.facebook && (
+                                    <p>{this.props.company.social_media.facebook}</p>
+                                )}
+                                {this.props.company.social_media.linkedin && (
+                                    <p>{this.props.company.social_media.linkedin}</p>
+                                )}
+                                {this.props.company.social_media.twitter && (
+                                    <p>{this.props.company.social_media.twitter}</p>
+                                )}
+                                {this.props.company.social_media.github && (
+                                    <p>{this.props.company.social_media.github}</p>
+                                )}
+                            </>
+                        ) : (
+                                <form onSubmit={this.updateUser}>
+                                    <input
+                                        name="facebook"
+                                        value={this.state.updatedProfile.social_media.facebook}
+                                        placeholder="Facebook"
+                                        onChange={this.handleSocialMediaChanges}
+                                    />
+                                    <input
+                                        name="linkedin"
+                                        value={this.state.updatedProfile.social_media.linkedin}
+                                        placeholder="LinkedIn"
+                                        onChange={this.handleSocialMediaChanges}
+                                    />
+                                    <input
+                                        name="twitter"
+                                        value={this.state.updatedProfile.social_media.twitter}
+                                        placeholder="Twitter"
+                                        onChange={this.handleSocialMediaChanges}
+                                    />
+                                    <input
+                                        name="github"
+                                        value={this.state.updatedProfile.social_media.github}
+                                        placeholder="GitHub"
+                                        onChange={this.handleSocialMediaChanges}
+                                    />
+                                    <input type="submit" style={{ display: "none" }} />
+                                </form>
+                            )}</>)}
                 </div>
                 <div className="name">
                     {!this.state.edit ? (<>
@@ -177,27 +298,41 @@ class CurrentCompanyProfile extends Component {
                             </form>
                         )}
                 </div>
-
-                {!this.state.edit ? (
-                    <input type="button" value="EDIT" onClick={this.edit} />
-                ) : (
-                        <form onSubmit={this.updateUser}>
-                            <input type="submit" value="SUBMIT" />
-                            <input type="button" value="CANCEL" onClick={this.cancel} />
-                        </form>
-                    )}
-            </>
+                <div className="jobs">
+                    {!this.state.edit ? (
+                        <></>
+                    ) : (
+                            <button onClick={this.createJob}>Create Job</button>
+                        )}
+                    {this.props.jobs.map(job => (
+                        <>
+                            <h3>{job.job_title}</h3>
+                            <p>{job.location}</p>
+                            {!this.state.edit ? (
+                                <></>
+                            ) : (
+                                    <button onClick={() => this.deleteJob(job.id)}>X</button>
+                                )}
+                        </>
+                    ))}
+                </div>
+            </div>
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-        company: state.userReducer.currentUser
+        company: state.userReducer.currentUser,
+        jobs: state.employerJobReducer.jobs
     };
 };
 
 export default connect(
     mapStateToProps,
-    { getCurrentUser, updateCurrentUser }
+    {
+        getCurrentUser,
+        updateCurrentUser,
+        getEmployerJobs,
+    }
 )(CurrentCompanyProfile);

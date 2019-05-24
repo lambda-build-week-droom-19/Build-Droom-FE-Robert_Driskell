@@ -1,3 +1,4 @@
+
 import React from "react";
 import "../../../sass/SignUpPastExperience.scss";
 class PastExperience extends React.Component {
@@ -94,6 +95,7 @@ class PastExperience extends React.Component {
                   x
                 </button> /*maybe add this later*/
               }
+
             </div>
           ))}
         </div>

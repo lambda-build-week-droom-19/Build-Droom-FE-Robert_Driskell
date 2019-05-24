@@ -24,6 +24,7 @@ class About extends React.Component
     }
     validate(cb)
     {
+        if(Object.keys(this.state).filter(x=> x !== "").length === 0) return;
         this.props.setData(this.state);
         cb();
     }

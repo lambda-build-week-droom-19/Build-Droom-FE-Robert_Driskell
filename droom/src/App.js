@@ -1,25 +1,37 @@
-import React from 'react';
+import React from "react";
 import "./sass/reset.scss";
 import "./sass/global.scss";
-import { axiosWithAuth } from './utils/axiosWithAuth';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
-import { login, getCurrentUser } from "./actions/index"
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+import { connect } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from "react-router-dom";
+import { login, getCurrentUser } from "./actions/index";
 import SignUpApp from "./views/SignUp/SignUpApp";
 
-import LoginPage from './routes/LoginPage';
+import LoginPage from "./routes/LoginPage";
 
-import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
-import JobProfile from './routes/JobProfile';
-import NavComponent from "./views/Nav/navComponent.js"
+import CurrentCompanyProfile from "./routes/CurrentCompanyProfile";
+import JobProfile from "./routes/JobProfile";
+import NavComponent from "./views/Nav/navComponent.js";
+import MatchingApp from "./views/matching/MatchingApp";
+import CurrentSeekerProfile from "./routes/CurrentSeekerProfile";
+import SeekerProfileByID from './routes/SeekerProfileByID';
+import CompanyProfileByID from './routes/CompanyProfileByID';
+import CompanyAccepted from './routes/CompanyAccepted';
 
-import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
 import initialPage from './views/InitialPage/initialPage.js';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
+const user_type = localStorage.getItem('userType')
 
 class App extends React.Component {
     logout = () => {
@@ -29,21 +41,22 @@ class App extends React.Component {
     componentWillMount() {
         this.props.getCurrentUser();
     }
-    
+
     render() {
         return (
             <div className="App">
+                <NavComponent/>
                 <button onClick={this.logout}>LOGOUT</button>
                 <Route exact path="/" component={LoginPage} />
                 <Route exact path="/intial" component={initialPage} />
                 <ul>
-                    <li>
+                    <li key="1">
                         <Link to="/public">Public Page</Link>
                     </li>
-                    <li>
+                    <li key="2">
                         <Link to="/protected">Protected Page</Link>
                     </li>
-                    <li>
+                    <li key="3">
                         <Link to="/my-profile">My Profile</Link>
                     </li>
                     <li>
@@ -53,16 +66,27 @@ class App extends React.Component {
                         <Link to="/signup">Signup</Link>
                     </li>
                 </ul>
-                <br/>
-                <br/>
-                {/* <NavComponent/> */}
+
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
-
+                <PrivateRoute path="/match" component={MatchingApp} />
                 <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
+                <Route
+                  path="/seeker/:id"
+                  render={props => (
+                   <SeekerProfileByID {...props} />
+                    )}
+                 />
+                <Route
+                 path="/employer/:id"
+                  render={props => (
+                    <CompanyProfileByID {...props} />
+                 )}
+                />
+                <Route path="/my-profile/accepted" component={CompanyAccepted}/>
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -70,54 +94,56 @@ class App extends React.Component {
                     <Route exact path="debug-chase" component={DebugRouteChase} /> 
                     
                     */}
-            </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-    return {
-        ...state
-    }
-}
+  return {
+    ...state
+  };
+};
 
-export default connect(mapStateToProps, { login, getCurrentUser })(App)
+export default connect(
+  mapStateToProps,
+  { login, getCurrentUser }
+)(App);
 
-const InPrivateRoute = ({component: Component, ... rest}) => {
-    return (
-        <Route
-            {...rest}
-            render={(props) => {
-                if (localStorage.getItem('userToken')) {
-                    return <Redirect to="/" />;
-                } else {
-                    return <Component {...props} />;
-                }
-            }}
-        />
-    );
-}
+const InPrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (localStorage.getItem("userToken")) {
+          return <Redirect to="/" />;
+        } else {
+          return <Component {...props} />;
+        }
+      }}
+    />
+  );
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    return (
-        <Route
-            {...rest}
-            render={(props) => {
-                if (localStorage.getItem('userToken')) {
-                    return <Component {...props} />;
-                } else {
-                    return <Redirect to="/" />;
-                }
-            }}
-        />
-    );
-}
-
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (localStorage.getItem("userToken")) {
+          return <Component {...props} />;
+        } else {
+          return <Redirect to="/" />;
+        }
+      }}
+    />
+  );
+};
 
 function Public() {
-    return <h3>Public</h3>;
+  return <h3>Public</h3>;
 }
 
 function Protected() {
-    return <h3>Protected</h3>;
+  return <h3>Protected</h3>;
 }
