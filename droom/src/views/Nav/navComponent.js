@@ -93,7 +93,7 @@ class navComponent extends Component {
 
     render() {
         return (
-            <div onMouseLeave={this.clickHamberger}>
+            <div >
                 <div className="transparent-nav">a</div>
                 <div className="main-header">
                     <div className={`container-hamberger ${this.state.hamActive}`}>
@@ -101,8 +101,8 @@ class navComponent extends Component {
                     </div>
                     <h1>Droom</h1>
                 </div>
-                {this.state.extendMobileNav === true ? (
-                    <div className={`container-main-nav ${this.state.extendMobileNav}`} >
+                {this.state.extendMobileNav === true ?  (
+                    <div className={`container-main-nav ${this.state.extendMobileNav}`}>
                         <div className="container-sec-pro">{/* <Preferences/> */}</div>
                         <div className="container-sec-nav">
                             <h2>Name</h2>
