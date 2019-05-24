@@ -45,7 +45,8 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                {/* <button onClick={this.logout}>LOGOUT</button>
+                <NavComponent/>
+                <button onClick={this.logout}>LOGOUT</button>
                 <Route exact path="/" component={LoginPage} />
                 <Route exact path="/intial" component={initialPage} />
                 <ul>
@@ -62,7 +63,6 @@ class App extends React.Component {
                         <Link to="/intial">Initial Page</Link>
                     </li>
                 </ul>
-                {/* <NavComponent/> */}
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />

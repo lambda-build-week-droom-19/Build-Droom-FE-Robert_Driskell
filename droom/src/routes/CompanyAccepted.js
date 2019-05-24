@@ -34,10 +34,10 @@ class CurrentCompanyProfile extends Component {
                 var merged = arrayOfArrays.flat(1);
                 console.log('array');
                 console.log(merged);
-                // this.setState({
-                //     people: acceptedPeople
-                //     })
-                // })
+                this.setState({
+                    people: merged
+                    })
+                })
                 console.log('read me')
                 console.log(this.state.jobs);
             })
