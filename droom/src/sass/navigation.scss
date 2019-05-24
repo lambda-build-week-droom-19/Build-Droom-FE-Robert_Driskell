@@ -7,6 +7,7 @@
     height: 6rem;
 }
 .main-header {
+  background: $backgroundNav;
   z-index: 4;
   display: flex;
   position: fixed;
@@ -52,7 +53,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: $background-nav;
+  background-color: $backgroundNav;
   width: 35%;
   height: 100%;
 //   border: 1px solid red;
@@ -84,7 +85,7 @@
         font-size: 2rem;
         margin-top: 2rem;
         text-decoration: none;
-        border: 2px solid $background-nav;
+        border: 2px solid $backgroundNav;
         border-radius: 2rem;
         padding: 1rem;
         width: 75%;
