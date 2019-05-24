@@ -41,7 +41,6 @@ class App extends React.Component {
     componentWillUpdate()
     {
         user_type = localStorage.getItem('userType');
-
     }
     logout = () => {
         localStorage.clear();

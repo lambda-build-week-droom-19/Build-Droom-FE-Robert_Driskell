@@ -12,6 +12,7 @@ class navComponent extends Component {
         this.state = {
             myProActive: "link-active",
             matchesActive: "link-inactive",
+            confirmedActive: "link-inactive",
             hamActive: "ham-inactive",
             windowWidth: 0,
             extendMobileNav: false
@@ -124,6 +125,20 @@ class navComponent extends Component {
                                 >
                                     Matches
                 </Link>
+                {
+                    localStorage.getItem("userType") === "employer"?
+                    <Link
+                                    onClick={() => {
+                                        this.link("confirmedActive");
+                                    }}
+                                    className={`nav-link ${this.state.confirmedActive}`}
+                                    to="/my-profile/accepted"
+                                >
+                                    Confirmed Applicants
+                    </Link>
+                    :
+                    ""
+                }
                             </nav>
                         </div>
                     </div>
