@@ -1,5 +1,5 @@
 import React from "react"
-
+import "../../../sass/SignUpHobby.scss";
 class Hobbies extends React.Component
 {
 
@@ -50,21 +50,24 @@ class Hobbies extends React.Component
     render()
     {
         return (
-        <div>
-            <div>Hobbies</div>
+        <div className="signin-main-hub">
+            <h2>Any intrests or hobbies?</h2>
             <button onClick={()=>this.addItem()}>Add New Hobby</button>
-            <div>
+            <div className="signin-input-hub">
                 {this.state.interests.map((x,i) => 
                 (
-                <div key={i}>
+                <div className="signin-input-hub-sub" key={i}>
                 <input name="interests" id={i} key={i} value={x} placeholder="Interests..." onChange={(e)=>this.handleChange(e)}/>
-                {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={()=> this.removeItem(i)}>x</button>/*maybe add this later*/}
+                {<button key={`but:${i}`} onClick={()=> this.removeItem(i)}>x</button>/*maybe add this later*/}
                 </div>
                 ))
                 }
             </div>
+            <div className="signin-main-but">
+
             {this.props.index() !== 0 ? <button onClick={()=>{this.validate(this.props.prev)}}>Prev</button> : ""}
             <button onClick={()=>{this.validate(this.props.next)}}>Next</button>
+            </div>
         </div>
         )
     }
