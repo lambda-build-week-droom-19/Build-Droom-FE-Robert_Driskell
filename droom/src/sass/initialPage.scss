@@ -3,7 +3,11 @@
   z-index: -1;
   height: 100vh;
   width: 100vw;
-  background: url(../assets/astronaut-4106766_1920.png) no-repeat 50% 50%;
+  background: url(../assets/astronaut-4106766_1920.png);
+  background-size: cover;  
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   .container-sec-intial {
     display: flex;
     flex-direction: column;
