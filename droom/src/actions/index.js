@@ -236,25 +236,29 @@ export const swipeMatch = (swipe,reciever,user,type) => dispatch =>
         user.seen.push(parseInt(reciever.id));
         axiosWithAuth()
         .put(`${SERVER_BASE_URL}/profile/seeker`, user)
-        .then(() => {/* console.log("accepted") */})
+        .then(() => {
+
+            if(swipe === 1)
+            return axios
+            .get(`${SERVER_BASE_URL}/jobs/${reciever.id}`)
+            .then(res => 
+                {
+                    
+                    let job = res.data;
+                    let user_id = parseInt(localStorage.getItem("userID"));
+                    if(!job || !job.appliers ||job.appliers.includes(user_id)) {console.log("this user does not exist or is already been seen"); return;}
+                    job.appliers.push(user_id);
+                    axiosWithAuth()
+                    .put(`${SERVER_BASE_URL}/jobs/${reciever.id}`, job)
+                    .then (() => console.log("done"))
+                    .catch(() => console.log("insdie err"));
+                })
+                .catch(()=>console.log('outside error'));
+                else console.log("rejected");
+        })
         .catch(() => {/* console.log("rejected") */});
         /* Add to job avalitble list */
-        if(swipe === 1)
-        return axios
-        .get(`${SERVER_BASE_URL}/jobs/${reciever.id}`)
-        .then(res => 
-            {
-                
-                let job = res.data;
-                let user_id = parseInt(localStorage.getItem("userID"));
-                if(!job || !job.appliers ||job.appliers.includes(user_id)) {console.log("this user does not exist or is already been seen"); return;}
-                job.appliers.push(user_id);
-                axiosWithAuth()
-                .put(`${SERVER_BASE_URL}/jobs/${reciever.id}`, job)
-                .then (() => console.log("done"))
-                .catch(() => console.log("insdie err"));
-            })
-            .catch(()=>console.log('outside error'))
+       
        
     }else 
     {

@@ -30,7 +30,7 @@ class MatchEmployer extends React.Component
                         <div>
                             <div/> {/*user profile pic*/}
                             <div>
-                                <div>{`${u.first_name} ${u.last_name}`}</div>
+                                <div>{`${u.first_name} ${u.last_name} ${u.user_id}`}</div>
                                 <div>{`${u.position}`}</div>
                                 <div>{`${u.location}`}</div>
                             </div>
@@ -47,7 +47,7 @@ class MatchEmployer extends React.Component
                         <div>
                             <div/> {/*user profile pic*/}
                             <div>
-                                <div>{`${u.first_name} ${u.last_name}`}</div>
+                                <div>{`${u.first_name} ${u.last_name} ${u.user_id}`}</div>
                                 <div>{`${u.position}`}</div>
                                 <div>{`${u.location}`}</div>
                             </div>

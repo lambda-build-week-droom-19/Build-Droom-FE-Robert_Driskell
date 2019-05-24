@@ -24,7 +24,7 @@ export const matcher = (state = initialState, action) => {
             return {
                 ...state,
                 gettingMatch: false,
-                dontFetch: action.payload.length,
+                dontFetch: !action.payload.length,
                 currentMatches: [...state.currentMatches,...action.payload],
                 error: '',
             }
