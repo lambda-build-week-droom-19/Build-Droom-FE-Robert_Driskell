@@ -3,6 +3,8 @@ import {Redirect} from "react-router-dom"
 import {connect} from "react-redux";
 import {getJob,getNiches,changeJob} from "../actions";
 
+import '../sass/JobProfile.scss'
+
 class JobProfile extends React.Component
 {
     editting;
@@ -63,7 +65,7 @@ class JobProfile extends React.Component
         if (this.editting){
             if(!this.owner) return <Redirect to={`/job/${this.props.match.params.id}`} />
         return(
-            <div>
+            <div className="job-profile">
                  {this.owner ? <button onClick={()=> {this.handleUpdate(); this.props.history.push(`/job/${this.props.match.params.id}`)}}>Finished</button> : ""}
                 <div>Job Title</div>
                 <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="job_title" value={this.state.job_title}/>

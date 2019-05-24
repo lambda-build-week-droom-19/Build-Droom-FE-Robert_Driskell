@@ -1,0 +1,172 @@
+@import "./variables.scss";
+
+input[type="text"],
+textarea {
+  font-size: 2rem;
+  padding: 1rem;
+  border: 1px solid transparent;
+  background: #faf6fe;
+  margin: 0.5rem;
+}
+textarea {
+    height: 25rem;
+    width: 100%;
+}
+form {
+  margin: 0 auto;
+  input[type="submit"] {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 2rem 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $primary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $primary;
+  }
+
+  input[type="submit"]:hover {
+    background: #2F0D4F;
+  }
+
+  input[type="button"] {
+    margin-top: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $secondary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $secondary;
+  }
+
+  input[type="button"]:hover {
+    background: #4F3E0D;
+    border: 2px solid $secondary;
+  }
+}
+
+button {
+    margin-top: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $primary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $primary;
+}
+
+button:hover {
+    background: #2F0D4F;
+}
+
+.company-matches {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.job {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    h3 {
+        align-self: center;
+    }
+
+    .confirmed-user {
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+        padding: 15px 25px;
+        width: 100%;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .left-content {
+            display: flex;
+        }
+        .img{
+            padding: 30px;
+            border-radius: 50%;
+            background: lightgray;
+            align-self: center;
+            margin-right: 15px;
+        }
+        h5 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.4rem;
+        }
+        strong {
+            font-weight: 700;
+            color: $primary;
+            margin: 0.4rem;
+        }
+        p {
+            margin: 0.4rem;
+            padding-bottom: 0;
+        }
+        button {
+            margin: 1rem 0;
+        }
+    }
+
+    .recent-user {
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+        padding: 15px 25px;
+        width: 100%;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .left-content {
+            display: flex;
+        }
+        .right-content {
+            display: flex;
+            button {
+                margin-left: 2rem;
+            }
+        }
+        .img{
+            padding: 30px;
+            border-radius: 50%;
+            background: lightgray;
+            align-self: center;
+            margin-right: 15px;
+        }
+        h5 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.4rem;
+        }
+        strong {
+            font-weight: 700;
+            color: $primary;
+            margin: 0.4rem;
+        }
+        p {
+            margin: 0.4rem;
+            padding-bottom: 0;
+        }
+        button {
+            margin: 1rem 0;
+        }
+    }
+}

@@ -1,0 +1,86 @@
+@import "./variables.scss";
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+
+.seeker-match {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    background-color: $primary;
+    padding: 1.5rem;
+    color: white;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    .header-left {
+        border-bottom: 1px solid white;
+        padding-right: 10%;
+    }
+    .company-description {
+        padding-left: .5rem;
+        margin-top: 1rem;
+    }
+}
+
+.basic-info {
+    display: flex;
+    flex-direction: column;
+    .experience {
+        strong {
+            font-weight: 700;
+        }
+        display: flex;
+    }
+    .pay {
+        strong {
+            font-weight: 700;
+        }
+        display: flex;
+    }
+    .location {
+        strong {
+            font-weight: 700;
+        }
+        display: flex;
+    }
+    .pay-details {
+        display: flex;
+        align-items: center;
+        .full-time{
+            display: flex;
+            border-radius: 1rem;
+            background-color: $primary;
+            color: white;
+            padding: .5rem 1rem;
+            margin: .4rem;
+            p {
+                padding-bottom: 0;
+            }
+        }
+        .pay-type{
+            display: flex;
+            border-radius: 1rem;
+            background-color: $primary;
+            color: white;
+            padding: .5rem 1rem;
+            margin: .4rem;
+            p {
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+
+.swipe-buttons {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    justify-content: space-between;
+}
