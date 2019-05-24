@@ -97,7 +97,7 @@ class JobProfile extends React.Component
         return (
         <div>
             {this.owner ? <button onClick={()=> this.props.history.push(`/job/${this.props.match.params.id}/edit`)}>edit</button> : ""}
-            <h2>{obj.job_title}</h2>
+            <h2 onClick={()=>this.props.history.push(`/employer/${obj.user_id}`)}>{obj.job_title}</h2>
             <div>{obj.location}</div>
             <h5>Staring Pay</h5>
             <div>{obj.starting_pay}</div>

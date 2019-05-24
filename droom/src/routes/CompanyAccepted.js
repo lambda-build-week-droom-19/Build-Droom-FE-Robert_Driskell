@@ -1,8 +1,13 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-import { getCurrentUser, updateCurrentUser, getEmployerJobs, SERVER_BASE_URL } from '../actions/index';
+import {
+  getCurrentUser,
+  updateCurrentUser,
+  getEmployerJobs,
+  SERVER_BASE_URL
+} from "../actions/index";
 
 import './CompanyAccepted.scss'
 
@@ -12,9 +17,10 @@ class CurrentCompanyProfile extends Component {
         confirmed: []
     }
 
-    componentDidMount() {
-        this.fetchAccepted();
-    }
+
+  componentDidMount() {
+    this.fetchAccepted();
+  }
 
     fetchAccepted = () => {
         axiosWithAuth()
@@ -83,12 +89,13 @@ class CurrentCompanyProfile extends Component {
             </div>
         )
     }
+
 }
 
 const mapStateToProps = state => {
-    return {
-        company: state.userReducer.currentUser,
-    };
+  return {
+    company: state.userReducer.currentUser
+  };
 };
 
 export default connect(
@@ -101,3 +108,4 @@ export default connect(
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
+

@@ -17,21 +17,20 @@ class MatchingApp extends React.Component
     {
         console.log(this.props.currentMatches)
         var component = <div></div>
-        if(this.usertype === "employer") component = <MatchEmployer />; //employer view
-        else if(this.usertype === "seeker") component = <MatchSeeker />; //Seker view
+        if(this.usertype === "employer") component = <MatchEmployer {...this.props} />; //employer view
+        else if(this.usertype === "seeker") component = <MatchSeeker {...this.props} />; //Seker view
         else component = <Redirect to="/login"/>; //Bounce them
-
+        console.log(this.props.user_data);
         return (
             <div>
                 {component}
-                <div><button onClick={()=> this.props.swipeMatch(0)}>-</button><button onClick={()=> this.props.swipeMatch(1)}>+</button></div> 
             </div>
         )
     }
 }
 const mapStateToProps = state => 
 {
-    return {...state.matcher, user_data: state.userReducer};
+    return {...state.matcher, user_data: state.userReducer.currentUser};
 }
 
 export default connect(mapStateToProps, {swipeMatch})(MatchingApp);

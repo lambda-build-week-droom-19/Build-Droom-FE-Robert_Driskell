@@ -120,7 +120,7 @@ class navComponent extends Component {
                                         this.link("matchesActive");
                                     }}
                                     className={`nav-link ${this.state.matchesActive}`}
-                                    to="/matches"
+                                    to="/match"
                                 >
                                     Matches
                 </Link>
