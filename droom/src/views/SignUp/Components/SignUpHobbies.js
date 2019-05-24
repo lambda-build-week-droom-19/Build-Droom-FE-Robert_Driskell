@@ -58,7 +58,7 @@ class Hobbies extends React.Component
                 (
                 <div key={i}>
                 <input name="interests" id={i} key={i} value={x} placeholder="Interests..." onChange={(e)=>this.handleChange(e)}/>
-                {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={(i)=> this.removeItem(i)}>x</button>/*maybe add this later*/}
+                {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={()=> this.removeItem(i)}>x</button>/*maybe add this later*/}
                 </div>
                 ))
                 }

@@ -63,7 +63,7 @@ class PastExperience extends React.Component
                 <input name="name"key={`1:${i}`} id={i} value={x.name} placeholder="Company..." onChange={(e)=>this.handleChange(e)}/>
                 <input name="title" key={`2:${i}`} id={i} value={x.title} placeholder="Job Title..." onChange={(e)=>this.handleChange(e)}/>
                 <input name="description" key={`3:${i}`} id={i} value={x.description} placeholder="Description..." onChange={(e)=>this.handleChange(e)}/>
-                {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={(i)=> this.removeItem(i)}>x</button>/*maybe add this later*/}
+                {<button key={`but:${i}`} style={{ margin: "-20px", background: "#00000000", border: "none"}} onClick={()=> this.removeItem(i)}>x</button>/*maybe add this later*/}
                 </div>
                 ))
                 }
