@@ -1,4 +1,3 @@
-
 import React from "react";
 import "../../../sass/SignUpPastExperience.scss";
 class PastExperience extends React.Component {
@@ -90,12 +89,11 @@ class PastExperience extends React.Component {
               {
                 <button
                   key={`but:${i}`}
-                  onClick={i => this.removeItem(i)}
+                  onClick={() => this.removeItem(i)}
                 >
                   x
                 </button> /*maybe add this later*/
               }
-
             </div>
           ))}
         </div>

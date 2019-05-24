@@ -9,21 +9,24 @@ class MatchSeeker extends React.Component
     }
     render()
     {
-        console.log(this.props.currentMatches);
-        if(this.props.currentMatches.length < 5 && !this.props.gettingMatch){this.props.getMatches(0); console.log(!this.props.gettingMatch)}
+        console.log(this.props.dontFetch);
+        console.log(this.props.currentMatches)
+        if(this.props.dontFetch) return <div>No More Matches</div>
+        if(this.props.currentMatches.length < 5 && !this.props.gettingMatch){this.props.getMatches(0);}
         if(this.props.gettingMatch && this.props.currentMatches.length === 0) return <div>Loading...</div>
         if(this.props.currentMatches.length === 0) return <div>ERROR</div>
         
         return (
             <div>
                 <MatchProfile data={this.props.currentMatches[0]} />
+                <div><button onClick={()=> this.props.swipeMatch(0,this.props.currentMatches[0],this.props.user_data,"seeker")}>-</button><button onClick={()=> this.props.swipeMatch(1,this.props.currentMatches[0],this.props.user_data,"seeker")}>+</button></div> 
             </div>
         )
     }
 }
 const mapStateToProps = state => 
 {
-    return { ...state.matcher}
+    return { ...state.matcher, user_data: state.userReducer.currentUser}
 }
 
 export default connect(mapStateToProps, {getMatches, swipeMatch})(MatchSeeker);

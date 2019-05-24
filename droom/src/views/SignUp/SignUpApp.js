@@ -37,6 +37,11 @@ class SignUpApp extends React.Component
             timestamp: "" 
         }; //list of data we are collecting to send to the server when app finalizes
     this.view = [
+        [ /*list of components to call for employers*/
+            <UserName getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+            <CompanyAbout getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
+            <CompanyBio getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
+        ],
         [ /*list of components to call for seekers*/
            <UserName getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <AccountType getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
@@ -44,12 +49,8 @@ class SignUpApp extends React.Component
            <PastExper getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <Hobbies getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
            <Interests getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
-        ],
-        [ /*list of components to call for employers*/
-            <UserName getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-            <CompanyAbout getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>,
-            <CompanyBio getData={()=>this.getData()} setData={(s) => this.setData(s)} index={()=>this.getIndex()} next={()=>this.nextElement()} prev={()=>this.prevElement()}/>
-        ] 
+        ]
+       
     ]
    
     }
@@ -86,22 +87,52 @@ class SignUpApp extends React.Component
             this.data.user_id = parseInt(localStorage.getItem('userID'));
             this.data.timestamp = Date.now();
             let obj = {}
-            if(this.data.user_type === 0) 
+            if(this.data.user_type === 1) 
             obj = {
                 first_name: this.data.first_name, 
                 last_name: this.data.last_name,
+                position: "",
                 location: this.data.location, 
                 bio: this.data.bio,
+                job_type: "",
+                contact_info: {
+                    phone_number: "",
+                    email: ""
+                },
                 interests: this.data.interests,
                 past_experience: this.data.past_experience,
+                education: [],
+                skills: this.data.interests,
+                references: [],
+                social_media: {
+                    facebook: "",
+                    linkedIn: "",
+                    twitter: "",
+                    github: ""
+                },
+                portfolio: "",
+                resume: "",
                 niche: this.data.niches[0],
+                seen: [],
                 timestamp: Date.now()
             };
             else 
             obj =
             {
-                // name: this.data.company_name,
-                // about: this.data.bio
+                name: this.data.company_name,
+                location: this.data.location,
+                about: this.data.bio,
+                contact_info: {
+                    phone: "",
+                    email: " "
+                },
+                social_media: {
+                    facebook: "",
+                    linkedIn: "",
+                    twitter: "",
+                    github: ""
+                },
+                website: ""
             }
             this.props.createProfile( obj, this.data.user_type, ()=>this.props.history.push({pathname: "/protected"}))
         }
