@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { SERVER_BASE_URL } from '../actions/index';
 
 //Styles
-import './CurrentSeekerProfile.scss'
+import '../sass/CurrentSeekerProfile.scss'
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 export default class SeekerProfileByID extends Component {
