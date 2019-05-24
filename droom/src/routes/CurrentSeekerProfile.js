@@ -5,7 +5,7 @@ import { getCurrentUser, updateCurrentUser } from "../actions/index";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 //Styles
-import './CurrentSeekerProfile.scss'
+import '../sass/CurrentSeekerProfile.scss';
 
 class CurrentSeekerProfile extends Component {
     state = {
@@ -473,12 +473,14 @@ class CurrentSeekerProfile extends Component {
                                     </>
                                 ) : (
                                         <form onSubmit={this.updateUser}>
+                                        <strong><p>First Name</p></strong>
                                             <input
                                                 name="first_name"
                                                 type="text"
                                                 value={this.state.updatedProfile.first_name}
                                                 onChange={this.handleChanges}
                                             />
+                                            <strong><p>Second Name</p></strong>
                                             <input
                                                 name="last_name"
                                                 type="text"
@@ -494,6 +496,7 @@ class CurrentSeekerProfile extends Component {
                                     <>{this.props.seeker.position}</>
                                 ) : (
                                         <form onSubmit={this.updateUser}>
+                                        <strong><p>Position</p></strong>
                                             <input
                                                 name="position"
                                                 type="text"
@@ -509,6 +512,7 @@ class CurrentSeekerProfile extends Component {
                                     <>{this.props.seeker.location}</>
                                 ) : (
                                         <form onSubmit={this.updateUser}>
+                                        <strong><p>Location</p></strong>
                                             <input
                                                 name="location"
                                                 type="text"
@@ -532,9 +536,13 @@ class CurrentSeekerProfile extends Component {
                     <div className="description">
                         <div className="bio">
                             {!this.state.edit ? (
-                                <>{this.props.seeker.bio}</>
+                                <>
+                                
+                                {this.props.seeker.bio}
+                                </>
                             ) : (
                                     <form onSubmit={this.updateUser}>
+                                    <strong><p>Biography</p></strong>
                                         <textarea
                                             name="bio"
                                             type="text"
@@ -560,12 +568,17 @@ class CurrentSeekerProfile extends Component {
                                     </>
                                 ) : (
                                         <form onSubmit={this.updateUser}>
+                                            <div>
+                                        <strong><p>Phone</p></strong>
                                             <input
                                                 name="phone_number"
                                                 type="text"
                                                 value={this.state.updatedProfile.contact_info.phone_number}
                                                 onChange={this.handleContactChanges}
                                             />
+                                            </div>
+                                            <div>
+                                            <strong><p>Email</p></strong>
                                             <input
                                                 name="email"
                                                 type="text"
@@ -573,6 +586,7 @@ class CurrentSeekerProfile extends Component {
                                                 onChange={this.handleContactChanges}
                                             />
                                             <input type="submit" style={{ display: "none" }} />
+                                            </div>
                                         </form>
                                     )}
                             </div>
@@ -581,6 +595,8 @@ class CurrentSeekerProfile extends Component {
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-interest">
                                     <form onSubmit={this.addInterest}>
+                                    <strong><p>Add New Interest</p></strong>
+                                    <div>
                                         <input
                                             name="newInterest"
                                             type="text"
@@ -588,12 +604,13 @@ class CurrentSeekerProfile extends Component {
                                             onChange={this.handleBaseStateChanges}
                                         />
                                         <input type="submit" value="+" />
+                                    </div>
                                     </form>
                                 </div>
                             )}
                             {this.props.seeker.interests &&
                                 this.props.seeker.interests.map((interest, index) => (
-                                    <>
+                                    <div>
                                         <div className="interest" key={`interest ${index}`}>
                                             {interest}
                                         </div>
@@ -602,7 +619,7 @@ class CurrentSeekerProfile extends Component {
                                         ) : (
                                                 <button onClick={e => this.removeInterest(e, index)}>X</button>
                                             )}
-                                    </>
+                                    </div>
                                 ))}
                         </div>
                         <div className="experiences">
@@ -626,6 +643,7 @@ class CurrentSeekerProfile extends Component {
                                             ) : (
                                                     <form onSubmit={this.updateUser}>
                                                         <input onClick={e => this.removeExperience(e, index)} type="button" value="X" />
+                                                        <strong><p>Company Name</p></strong>
                                                         <input
                                                             name="name"
                                                             id={index}
@@ -636,6 +654,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleExperienceChanges(e, index)}
                                                         />
+                                                        <strong><p>Title</p></strong>
                                                         <input
                                                             name="title"
                                                             id={index}
@@ -646,6 +665,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleExperienceChanges(e, index)}
                                                         />
+                                                        <strong><p>Description</p></strong>
                                                         <textarea
                                                             name="description"
                                                             id={index}
@@ -663,7 +683,7 @@ class CurrentSeekerProfile extends Component {
                                     </div>
                                 ))}
                         </div>
-                        <div className="education">
+                        <div className="educations">
                             {!this.state.edit ? (
                                 <></>
                             ) : (
@@ -683,6 +703,7 @@ class CurrentSeekerProfile extends Component {
                                             ) : (
                                                     <form onSubmit={this.updateUser}>
                                                         <input onClick={e => this.removeEducation(e, index)} type="button" value="X" />
+                                                        <strong><p>School</p></strong>
                                                         <input
                                                             name="school"
                                                             id={index}
@@ -693,6 +714,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleEducationChanges(e, index)}
                                                         />
+                                                        <strong><p>Certificate</p></strong>
                                                         <input
                                                             name="certificate"
                                                             id={index}
@@ -713,6 +735,8 @@ class CurrentSeekerProfile extends Component {
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-skill">
                                     <form onSubmit={this.addSkill}>
+                                    <strong><p>Add Skill</p></strong>
+                                    <div>
                                         <input
                                             name="newSkill"
                                             type="text"
@@ -720,6 +744,7 @@ class CurrentSeekerProfile extends Component {
                                             onChange={this.handleBaseStateChanges}
                                         />
                                         <input type="submit" value="+" />
+                                    </div>
                                     </form>
                                 </div>
                             )}
@@ -759,6 +784,7 @@ class CurrentSeekerProfile extends Component {
                                             ) : (
                                                     <form onSubmit={this.updateUser}>
                                                         <input onClick={e => this.removeReference(e, index)} type="button" value="X" />
+                                                        <strong><p>Reference Name</p></strong>
                                                         <input
                                                             name="name"
                                                             id={index}
@@ -769,6 +795,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleReferenceChanges(e, index)}
                                                         />
+                                                        <strong><p>Relationship</p></strong>
                                                         <input
                                                             name="relationship"
                                                             id={index}
@@ -779,6 +806,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleReferenceChanges(e, index)}
                                                         />
+                                                        <strong><p>Phone</p></strong>
                                                         <input
                                                             name="phone"
                                                             id={index}
@@ -789,6 +817,7 @@ class CurrentSeekerProfile extends Component {
                                                             }
                                                             onChange={e => this.handleReferenceChanges(e, index)}
                                                         />
+                                                        <strong><p>Email</p></strong>
                                                         <input
                                                             name="email"
                                                             id={index}
@@ -824,25 +853,33 @@ class CurrentSeekerProfile extends Component {
                                     </>
                                 ) : (
                                         <form onSubmit={this.updateUser}>
+                                        <strong><p>Facebook</p></strong>
                                             <input
+                                            type="text"
                                                 name="facebook"
                                                 value={this.state.updatedProfile.social_media.facebook}
                                                 placeholder="Facebook"
                                                 onChange={this.handleSocialMediaChanges}
                                             />
+                                            <strong><p>LinkedIn</p></strong>
                                             <input
+                                            type="text"
                                                 name="linkedin"
                                                 value={this.state.updatedProfile.social_media.linkedin}
                                                 placeholder="LinkedIn"
                                                 onChange={this.handleSocialMediaChanges}
                                             />
+                                            <strong><p>Twitter</p></strong>
                                             <input
+                                            type="text"
                                                 name="twitter"
                                                 value={this.state.updatedProfile.social_media.twitter}
                                                 placeholder="Twitter"
                                                 onChange={this.handleSocialMediaChanges}
                                             />
+                                            <strong><p>Github</p></strong>
                                             <input
+                                            type="text"
                                                 name="github"
                                                 value={this.state.updatedProfile.social_media.github}
                                                 placeholder="GitHub"
@@ -862,6 +899,7 @@ class CurrentSeekerProfile extends Component {
                                 </>
                             ) : (
                                     <form onSubmit={this.updateUser}>
+                                    <strong><p>Portfolio</p></strong>
                                         <input
                                             name="portfolio"
                                             type="text"
@@ -882,6 +920,7 @@ class CurrentSeekerProfile extends Component {
                                 </>
                             ) : (
                                     <form onSubmit={this.updateUser}>
+                                    <strong><p>Resume</p></strong>
                                         <input
                                             name="resume"
                                             type="text"
@@ -896,6 +935,7 @@ class CurrentSeekerProfile extends Component {
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-project">
                                     <form onSubmit={this.addProject}>
+                                    <strong><p>Add Project Link</p></strong>
                                         <input
                                             name="newProject"
                                             type="text"
@@ -908,7 +948,7 @@ class CurrentSeekerProfile extends Component {
                             )}
                             {this.props.seeker.projects &&
                                 this.props.seeker.projects.map((project, index) => (
-                                    <>
+                                    <div>
                                         <div className="project" key={`project ${index}`}>
                                             {project}
                                         </div>
@@ -917,7 +957,7 @@ class CurrentSeekerProfile extends Component {
                                         ) : (
                                                 <button onClick={e => this.removeProject(e, index)}>X</button>
                                             )}
-                                    </>
+                                    </div>
                                 ))}
                         </div>
                     </div>{this.state.edit &&
