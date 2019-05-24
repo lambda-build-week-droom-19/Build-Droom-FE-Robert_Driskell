@@ -67,7 +67,7 @@ class App extends React.Component {
                     </li>
                 </ul>
 
- 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
+                <Route path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
