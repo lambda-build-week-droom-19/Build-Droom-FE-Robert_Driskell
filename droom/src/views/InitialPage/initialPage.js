@@ -28,12 +28,12 @@ class initialPage extends Component {
                   A quick and simple path to your <span>dream</span> job.
                 </p>
                 <Link
-                  to="/"
+                  to="/signup"
                 >
-                  Sign In
+                  Sign Up
                 </Link>
                 <Link
-                  to="/"
+                  to="/login"
                 >
                   Log In
                 </Link>

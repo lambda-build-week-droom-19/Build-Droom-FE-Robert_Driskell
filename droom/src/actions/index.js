@@ -8,7 +8,7 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-export const login = creds => dispatch => {
+export const login = (creds, cb = ()=>{}) => dispatch => {
     dispatch({ type: LOGIN_START });
     return axios
         .post(`${SERVER_BASE_URL}/auth/login`, creds)
@@ -16,9 +16,11 @@ export const login = creds => dispatch => {
             localStorage.setItem("userToken", res.data.token);
             localStorage.setItem('userID', res.data.id);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            window.setTimeout(cb, 250);
         })
         .catch(err => {
-            dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
+            dispatch({ type: LOGIN_FAILURE, payload: err });
+            //cb();
         });
 };
 
@@ -57,7 +59,7 @@ export const createProfile = (data,type,cb) => dispatch =>
     .then(res=> {
         dispatch({ type: "PASSED", payload: res.data });
         localStorage.setItem("userID", res.data.user_id);
-        cb();
+        window.setTimeout(cb, 250);
     }).catch(err => dispatch({ type: "FAILED", payload: err }) );
 }
 

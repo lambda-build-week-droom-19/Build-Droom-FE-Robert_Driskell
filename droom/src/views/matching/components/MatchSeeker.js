@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 import {getMatches,swipeMatch} from "../../../actions";
 
 class MatchSeeker extends React.Component
@@ -62,7 +63,7 @@ const MatchProfile = props =>
                     </div>
                 </div>
                 <div>
-                    <button>View Company Profile</button>
+                    <button><Link to={`/employer/${props.data.user_id}`}>View Company Profile</Link></button>
                 </div>
             </div>
             <div>
