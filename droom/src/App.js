@@ -31,6 +31,8 @@ import initialPage from './views/InitialPage/initialPage.js';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
+const user_type = localStorage.getItem('userType')
+
 class App extends React.Component {
     logout = () => {
         localStorage.clear();
@@ -39,7 +41,7 @@ class App extends React.Component {
     componentWillMount() {
         this.props.getCurrentUser();
     }
-    
+
     render() {
         return (
             <div className="App">
