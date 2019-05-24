@@ -65,17 +65,17 @@ class JobProfile extends React.Component
         if (this.editting){
             if(!this.owner) return <Redirect to={`/job/${this.props.match.params.id}`} />
         return(
-            <div className="job-profile">
+            <div className="job-profile-form">
                  {this.owner ? <button onClick={()=> {this.handleUpdate(); this.props.history.push(`/job/${this.props.match.params.id}`)}}>Finished</button> : ""}
-                <div>Job Title</div>
+                <p>Job Title</p>
                 <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="job_title" value={this.state.job_title}/>
-                <div>Location</div>
+                <p>Location</p>
                 <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="location" value={this.state.location}/>
-                <div>Staring Pay</div>
+                <p>Staring Pay</p>
                 <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="starting_pay" value={this.state.starting_pay}/>
-                <div>Description</div>
+                <p>Description</p>
                 <input onChange={(e)=> this.handleChange(e.target.name, e.target.value)} name="description" value={this.state.description}/>
-                <div>Responsibilities</div>
+                <h3>Responsibilities</h3>
                 <button onClick={()=>{let arry = this.state.responsibilities ? this.state.responsibilities : []; if(!this.valitdateNewElement(arry)) return; arry.push(""); this.handleChange("responsibilities",arry)}}>New Responsibility</button>
                 { this.state.responsibilities && this.state.responsibilities.length ? this.state.responsibilities.map((x,i,a)=>
                     {
@@ -84,7 +84,7 @@ class JobProfile extends React.Component
                             <button onClick={(e) => {let arry = a; arry.splice(i,1); this.handleChange(e.target.name, arry);}}>-</button>
                         </div>
                     }) : <div>{this.handleChange("responsibilities", [""]) ? "" : "" }</div>}
-                <div>Required Skills</div>
+                <h3>Required Skills</h3>
                 <button onClick={()=>{let arry = this.state.required_skills ? this.state.required_skills : []; if(!this.valitdateNewElement(arry)) return; arry.push(""); this.handleChange("required_skills",arry)}}>New Skill</button>
                 { this.state.required_skills && this.state.required_skills.length ? this.state.required_skills.map((x,i,a)=>
                     {
@@ -97,35 +97,39 @@ class JobProfile extends React.Component
         );
         }
         return (
-        <div>
+        <div className="job-profile">
             {this.owner ? <button onClick={()=> this.props.history.push(`/job/${this.props.match.params.id}/edit`)}>edit</button> : ""}
             <h2 onClick={()=>this.props.history.push(`/employer/${obj.user_id}`)}>{obj.job_title}</h2>
-            <div>{obj.location}</div>
-            <h5>Staring Pay</h5>
-            <div>{obj.starting_pay}</div>
-            <div></div> {/* Horizontal line */}
-            <h5>Description</h5>
-            <div>{obj.description}</div>
-            <div></div> {/* Horizontal line */}
-            <h5>Responsibilities</h5>
-            <ul>
+            <h4>{obj.location}</h4>
+            <div class="starting-pay">
+                <p><strong>Starting Pay: </strong>{obj.starting_pay}</p>
+            </div>
+            <div class="description">
+                <strong><p>Description</p></strong>
+                <p>{obj.description}</p>
+            </div>
+            <div class="responsibilities">
+                <p><strong>Responsibilities</strong></p>
+                <ul>
+                    {   
+                    obj.responsibilities && obj.responsibilities.length ? obj.responsibilities.map(x=>
+                        <li>
+                            <p>{x}</p>
+                        </li>    
+                    ) : 
+                        <div>None</div>
+                    }
+                </ul>
+            </div>
+            <div class="skills">
+                <p><strong>Required Skills</strong></p>
                 {   
-                obj.responsibilities && obj.responsibilities.length ? obj.responsibilities.map(x=>
-                    <li>
-                        {x}
-                    </li>    
-                ) : 
+                     obj.required_skills && obj.required_skills.length ? obj.required_skills.map(x=>
+                        <div><p>{x}</p></div>
+                    ) : 
                     <div>None</div>
                 }
-            </ul>
-            <div></div> {/* Horizontal line */}
-            <h5>Required Skills</h5>
-            {   
-                 obj.required_skills && obj.required_skills.length ? obj.required_skills.map(x=>
-                    <div>{x}</div>
-                ) : 
-                <div>None</div>
-            }
+            </div>
 
         </div>);
     }
