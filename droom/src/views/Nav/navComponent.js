@@ -12,6 +12,7 @@ class navComponent extends Component {
         this.state = {
             myProActive: "link-active",
             matchesActive: "link-inactive",
+            confirmedActive: "link-inactive",
             hamActive: "ham-inactive",
             windowWidth: 0,
             extendMobileNav: false
@@ -92,7 +93,7 @@ class navComponent extends Component {
 
     render() {
         return (
-            <>
+            <div onMouseLeave={this.clickHamberger}>
                 <div className="transparent-nav">a</div>
                 <div className="main-header">
                     <div className={`container-hamberger ${this.state.hamActive}`}>
@@ -101,36 +102,53 @@ class navComponent extends Component {
                     <h1>Droom</h1>
                 </div>
                 {this.state.extendMobileNav === true ? (
-                    <div className={`container-main-nav ${this.state.extendMobileNav}`}>
+                    <div className={`container-main-nav ${this.state.extendMobileNav}`} >
                         <div className="container-sec-pro">{/* <Preferences/> */}</div>
                         <div className="container-sec-nav">
                             <h2>Name</h2>
                             <nav>
-                                <Link
+                                <Link 
                                     onClick={() => {
                                         this.link("myProActive");
+                                        this.clickHamberger()
                                     }}
                                     className={`nav-link ${this.state.myProActive}`}
                                     to="/my-profile"
                                 >
                                     My Profile
                 </Link>
-                                <Link
+                                <Link 
                                     onClick={() => {
                                         this.link("matchesActive");
+                                        this.clickHamberger()
                                     }}
                                     className={`nav-link ${this.state.matchesActive}`}
                                     to="/match"
                                 >
                                     Matches
                 </Link>
+                {
+                    localStorage.getItem("userType") === "employer"?
+                    <Link 
+                                    onClick={() => {
+                                        this.link("confirmedActive");
+                                        this.clickHamberger()
+                                    }}
+                                    className={`nav-link ${this.state.confirmedActive}`}
+                                    to="/my-profile/accepted"
+                                >
+                                    Confirmed Applicants
+                    </Link>
+                    :
+                    ""
+                }
                             </nav>
                         </div>
                     </div>
                 ) : (
                         <></>
                     )}
-            </>
+            </div>
         );
     }
 }
