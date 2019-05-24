@@ -83,6 +83,7 @@ button:hover {
 
   .seeker-head {
     margin-top: 65px;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
 
@@ -102,6 +103,15 @@ button:hover {
     .key-info {
       align-self: center;
       text-align: center;
+      .name {
+        margin-top: 1rem;
+      }
+      .position {
+        margin-top: 1rem;
+      }
+      .location {
+        margin-top: 1rem;
+      }
       form {
         display: flex;
         flex-direction: column;
@@ -114,6 +124,30 @@ button:hover {
     }
   }
 
+  input[type="button"] {
+    margin-top: 1rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $secondary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $secondary;
+    width: 10%;
+    @media (max-width: $mobile) {
+        width: 25%;
+    }
+  }
+
+  input[type="button"]:hover {
+    background: #4f3e0d;
+    border: 2px solid $secondary;
+  }
+
   .description {
     margin-top: 15px;
     max-width: 900px;
@@ -123,6 +157,14 @@ button:hover {
       font-size: 1.6rem;
       font-weight: bold;
       text-transform: capitalize;
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      p {
+        width: 100%;
+      }
       form {
         strong {
           font-weight: 700;
@@ -131,6 +173,11 @@ button:hover {
       }
     }
     .contact {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       form {
         display: flex;
         justify-content: space-between;
@@ -148,6 +195,11 @@ button:hover {
       }
     }
     .interests {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .add-interest {
         display: flex;
         justify-content: flex-start;
@@ -176,6 +228,11 @@ button:hover {
       }
     }
     .experiences {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .experience {
         form {
           strong {
@@ -186,6 +243,11 @@ button:hover {
       }
     }
     .educations {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .education {
         form {
           strong {
@@ -196,6 +258,11 @@ button:hover {
       }
     }
     .skills {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .add-skill {
         strong {
           font-weight: 700;
@@ -207,6 +274,11 @@ button:hover {
       }
     }
     .references {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .reference {
         form {
           strong {
@@ -217,6 +289,11 @@ button:hover {
       }
     }
     .social {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       form {
         strong {
           font-weight: 700;
@@ -225,6 +302,11 @@ button:hover {
       }
     }
     .portfolio {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       form {
         strong {
           font-weight: 700;
@@ -233,6 +315,11 @@ button:hover {
       }
     }
     .resume {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       form {
         strong {
           font-weight: 700;
@@ -241,6 +328,11 @@ button:hover {
       }
     }
     .projects {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
       .add-project {
         form {
           strong {

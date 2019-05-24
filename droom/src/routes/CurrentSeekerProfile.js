@@ -537,8 +537,8 @@ class CurrentSeekerProfile extends Component {
                         <div className="bio">
                             {!this.state.edit ? (
                                 <>
-                                
-                                {this.props.seeker.bio}
+                                <strong><p>Biography</p></strong>
+                                <p>{this.props.seeker.bio}</p>
                                 </>
                             ) : (
                                     <form onSubmit={this.updateUser}>
@@ -558,11 +558,11 @@ class CurrentSeekerProfile extends Component {
                                 {!this.state.edit ? (
                                     <>
                                         <p>
-                                            <strong>Phone: </strong>
+                                        <strong><p>Phone</p></strong>
                                             {this.props.seeker.contact_info.phone_number}
                                         </p>
                                         <p>
-                                            <strong>Email: </strong>
+                                        <strong><p>Email</p></strong>
                                             {this.props.seeker.contact_info.email}
                                         </p>
                                     </>
@@ -592,6 +592,7 @@ class CurrentSeekerProfile extends Component {
                             </div>
                         )}
                         <div className="interests">
+                        <strong><p>Interests</p></strong>
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-interest">
                                     <form onSubmit={this.addInterest}>
@@ -623,6 +624,7 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="experiences">
+                        <strong><p>Experiences</p></strong>
                             {!this.state.edit ? (
                                 <></>
                             ) : (
@@ -684,6 +686,7 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="educations">
+                        <strong><p>Education</p></strong>
                             {!this.state.edit ? (
                                 <></>
                             ) : (
@@ -732,6 +735,7 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="skills">
+                        <strong><p>Skills</p></strong>
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-skill">
                                     <form onSubmit={this.addSkill}>
@@ -763,6 +767,7 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="references">
+                        <strong><p>References</p></strong>
                             {!this.state.edit ? (
                                 <></>
                             ) : (
@@ -835,6 +840,7 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="social">
+                        <strong><p>Social Links</p></strong>
                             {this.props.seeker.social_media && (<>
                                 {!this.state.edit ? (
                                     <>
@@ -890,10 +896,10 @@ class CurrentSeekerProfile extends Component {
                                     )}</>)}
                         </div>
                         <div className="portfolio">
+                        <strong><p>Portfolio</p></strong>
                             {!this.state.edit ? (
                                 <>
                                     <p>
-                                        <strong>Portfolio: </strong>
                                         {this.props.seeker.portfolio}
                                     </p>
                                 </>
@@ -911,10 +917,10 @@ class CurrentSeekerProfile extends Component {
                                 )}
                         </div>
                         <div className="resume">
+                            <strong><p>Resume</p></strong>
                             {!this.state.edit ? (
                                 <>
                                     <p>
-                                        <strong>Resume: </strong>
                                         {this.props.seeker.resume}
                                     </p>
                                 </>
@@ -932,6 +938,7 @@ class CurrentSeekerProfile extends Component {
                                 )}
                         </div>
                         <div className="projects">
+                            <strong><p>Project Links</p></strong>
                             {!this.state.edit ? (<></>) : (
                                 <div className="add-project">
                                     <form onSubmit={this.addProject}>
