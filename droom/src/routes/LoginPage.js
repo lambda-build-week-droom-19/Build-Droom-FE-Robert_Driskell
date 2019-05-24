@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 import { login, getCurrentUser } from '../actions';
+import './Login.scss';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="login">
                 <form onSubmit={this.handleSubmit}>
                     <input
                         name="username"
