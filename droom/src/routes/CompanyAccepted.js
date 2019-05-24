@@ -4,9 +4,12 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 import { getCurrentUser, updateCurrentUser, getEmployerJobs, SERVER_BASE_URL } from '../actions/index';
 
+import './CompanyAccepted.scss'
+
 class CurrentCompanyProfile extends Component {
     state = {
-        people: []
+        people: [],
+        confirmed: []
     }
 
     componentDidMount() {
@@ -17,39 +20,67 @@ class CurrentCompanyProfile extends Component {
         axiosWithAuth()
             .get(`${SERVER_BASE_URL}/jobs/matches/employer`)
             .then(res => {
-                console.log(res)
-                const jobsWithAcceptedPeople = res.data.filter(job => {
-                    if (job.usersConfirmed.length > 0) {
-                        return job.usersConfirmed
-                    } else {
-                        return false;
-                    }
-                })
-                console.log(jobsWithAcceptedPeople);
-                const arrayOfArrays = jobsWithAcceptedPeople.map(job => {
-                    console.log(job.usersConfirmed);
-                    return job.usersConfirmed;
-                })
-                console.log(arrayOfArrays);
-                var merged = arrayOfArrays.flat(1);
-                console.log('array');
-                console.log(merged);
-                this.setState({
-                    people: merged
+                let people = []
+                res.data.map(job => {
+                    job.usersConfirmed.map(user => {
+                        people.push({
+                            ...user,
+                            job_id: job.job.id
+                        })
                     })
+                    return job
                 })
-                console.log('read me')
-                console.log(this.state.jobs);
+
+                this.setState({
+                    ...this.state,
+                    people
+                })
             })
             .catch(err => {
                 console.log(err);
             })
     }
 
+    removeConfirmed = (id, job_id) => {
+        axiosWithAuth()
+            .get(`${SERVER_BASE_URL}/jobs/${job_id}`)
+            .then(res => {
+                this.setState({
+                    people: this.state.people.filter(pe => {
+                        return pe.user_id !== id
+                    })
+                    ,
+                    confirmed: [
+                        ...res.data.confirmed.filter(ap => {
+                            console.log(ap, id)
+                            return ap !== id
+                        })
+                    ]
+                })
+                axiosWithAuth()
+                    .put(`${SERVER_BASE_URL}/jobs/${job_id}`, { confirmed: this.state.confirmed })
+                this.fetchAccepted()
+            })
+    }
+
     render() {
+        console.log('confirmed', this.state.confirmed)
+        console.log('people', this.state.people)
         return (
-            <>
-            </>
+            <div className='confirmed-people'>
+                <h1>Confirmed Applicants</h1>
+                {this.state.people.map(person => (
+                    <div className='confirmed-person'>
+                        <div className='img'></div>
+                        <div>
+                            <h2>{`${person.last_name}, ${person.first_name}`}</h2>
+                            <h3>{person.position}</h3>
+                            <h3>{person.location}</h3>
+                        </div>
+                        <span onClick={() => this.removeConfirmed(person.user_id, person.job_id)}>X</span>
+                    </div>
+                ))}
+            </div>
         )
     }
 }
@@ -66,3 +97,7 @@ export default connect(
         getCurrentUser,
     }
 )(CurrentCompanyProfile);
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}

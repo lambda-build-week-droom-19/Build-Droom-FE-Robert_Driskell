@@ -34,56 +34,56 @@ import DebugRouteChase from './DebugRouteChase'; */
 const user_type = localStorage.getItem('userType')
 
 class App extends React.Component {
-    logout = () => {
-        localStorage.clear();
-        window.location.reload();
-    }
-    componentWillMount() {
-        this.props.getCurrentUser();
-    }
+  logout = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
+  componentWillMount() {
+    this.props.getCurrentUser();
+  }
 
-    render() {
-        return (
-            <div className="App">
-                <NavComponent/>
-                <button onClick={this.logout}>LOGOUT</button>
-                <Route exact path="/" component={LoginPage} />
-                <Route exact path="/intial" component={initialPage} />
-                <ul>
-                    <li key="1">
-                        <Link to="/public">Public Page</Link>
-                    </li>
-                    <li key="2">
-                        <Link to="/protected">Protected Page</Link>
-                    </li>
-                    <li key="3">
-                        <Link to="/my-profile">My Profile</Link>
-                    </li>
-                    <li>
-                        <Link to="/intial">Initial Page</Link>
-                    </li>
-                </ul>
- 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
-                <Route path="/public" component={Public} />
-                <Route path="/signup" component={SignUpApp} />
-                <PrivateRoute path="/match" component={MatchingApp} />
-                <PrivateRoute path="/protected" component={Protected} />
-                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
-                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
-                <Route
-                  path="/seeker/:id"
-                  render={props => (
-                   <SeekerProfileByID {...props} />
-                    )}
-                 />
-                <Route
-                 path="/employer/:id"
-                  render={props => (
-                    <CompanyProfileByID {...props} />
-                 )}
-                />
-                <Route path="/my-profile/accepted" component={CompanyAccepted}/>
-                {/* 
+  render() {
+    return (
+      <div className="App">
+        <NavComponent />
+        <button onClick={this.logout}>LOGOUT</button>
+        <Route exact path="/" component={LoginPage} />
+        <Route exact path="/intial" component={initialPage} />
+        <ul>
+          <li key="1">
+            <Link to="/public">Public Page</Link>
+          </li>
+          <li key="2">
+            <Link to="/protected">Protected Page</Link>
+          </li>
+          <li key="3">
+            <Link to="/my-profile">My Profile</Link>
+          </li>
+          <li>
+            <Link to="/intial">Initial Page</Link>
+          </li>
+        </ul>
+        <Route path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
+        <Route path="/public" component={Public} />
+        <Route path="/signup" component={SignUpApp} />
+        <PrivateRoute path="/match" component={MatchingApp} />
+        <PrivateRoute path="/protected" component={Protected} />
+        <PrivateRoute path="/job/:id" exact component={JobProfile} />
+        <PrivateRoute path="/job/:id/:edit" component={JobProfile} />
+        <Route
+          path="/seeker/:id"
+          render={props => (
+            <SeekerProfileByID {...props} />
+          )}
+        />
+        <Route
+          path="/employer/:id"
+          render={props => (
+            <CompanyProfileByID {...props} />
+          )}
+        />
+        <Route path="/my-profile/accepted" component={CompanyAccepted} />
+        {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
                     <Route exact path="debug-bobby" component={DebugRouteBobby} />
