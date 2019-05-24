@@ -1,51 +1,96 @@
-import React from 'react';
-import './App.css';
-import { axiosWithAuth } from './utils/axiosWithAuth';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom"
-import { login, getCurrentUser } from "./actions/index"
+import React from "react";
+import "./sass/reset.scss";
+import "./sass/global.scss";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+import { connect } from "react-redux";
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect,
+    withRouter
+} from "react-router-dom";
+import { login, getCurrentUser } from "./actions/index";
 import SignUpApp from "./views/SignUp/SignUpApp";
 
-import LoginPage from './routes/LoginPage';
+import LoginPage from "./routes/LoginPage";
 
-import CurrentCompanyProfile from './routes/CurrentCompanyProfile';
-import JobProfile from './routes/JobProfile';import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
+import CurrentCompanyProfile from "./routes/CurrentCompanyProfile";
+import JobProfile from "./routes/JobProfile";
+import NavComponent from "./views/Nav/navComponent.js";
+import MatchingApp from "./views/matching/MatchingApp";
+import CurrentSeekerProfile from "./routes/CurrentSeekerProfile";
+import SeekerProfileByID from './routes/SeekerProfileByID';
+import CompanyProfileByID from './routes/CompanyProfileByID';
+import CompanyAccepted from './routes/CompanyAccepted';
+
+import initialPage from './views/InitialPage/initialPage.js';
+
 
 /* import LandingPage from './routes/LandingPage';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
+var user_type = localStorage.getItem('userType');
 
 class App extends React.Component {
-    logout = () => {
-        localStorage.clear();
-        window.location.reload();
-    }
     componentWillMount() {
         this.props.getCurrentUser();
     }
-    
+
+    componentWillUpdate() {
+        user_type = localStorage.getItem('userType');
+        if (Object.keys(this.props.currentUser).length === 0 && !this.props.gettingUser && localStorage.getItem('userType')) this.props.getCurrentUser();
+    }
+    logout = () => {
+        localStorage.clear();
+        this.window.refresh();
+    }
     render() {
+        //if(this.props.isLogging) return <div></div>;
         return (
             <div className="App">
-                <button onClick={this.logout}>LOGOUT</button>
-                <Route exact path="/" component={LoginPage} />
-                <ul>
-                    <li>
+                {localStorage.getItem("userToken") ? <NavComponent /> : ""}
+                {localStorage.getItem("userToken") ? <button><Link to="/" onClick={this.logout}>LOGOUT</Link></button> : ""}
+                <Route exact path="/login" component={LoginPage} />
+                <InPrivateRoute exact path="/" component={initialPage} />
+                {/* <ul>
+                    <li key="1">
                         <Link to="/public">Public Page</Link>
                     </li>
-                    <li>
-                        <Link to="/protected">Protected Page</Link>
+                    <li key="2">
+                        <Link to="/protected">Matches</Link>
                     </li>
-                    <li>
+                    <li key="3">
                         <Link to="/my-profile">My Profile</Link>
                     </li>
-                </ul>
- 				<Route path="/my-profile" exact component={CurrentCompanyProfile} />                <Route path="/public" component={Public} />
+                    <li>
+                        <Link to="/intial">Initial Page</Link>
+                    </li>
+                    <li>
+                        <Link to="/signup">Signup</Link>
+                    </li>
+
+                </ul> */}
+                <Route path="/my-profile/" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
+
                 <Route path="/signup" component={SignUpApp} />
-                <PrivateRoute path="/protected" component={Protected} />
-                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
-                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
+                <PrivateRoute path="/match" component={MatchingApp} />
+                <PrivateRoute path="/job/:id" exact component={JobProfile} />
+                <PrivateRoute path="/job/:id/:edit" component={JobProfile} />
+                <Route
+                    path="/seeker/:id"
+                    render={props => (
+                        <SeekerProfileByID {...props} />
+                    )}
+                />
+                <Route
+                    path="/employer/:id"
+                    render={props => (
+                        <CompanyProfileByID {...props} />
+                    )}
+                />
+                <Route path="/my-profile/accepted" component={CompanyAccepted} />
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -60,33 +105,37 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ...state
-    }
-}
+        ...state.loginReducer,
+        ...state.userReducer
+    };
+};
 
-export default connect(mapStateToProps, { login, getCurrentUser })(App)
+export default connect(
+    mapStateToProps,
+    { login, getCurrentUser }
+)(App);
 
-const InPrivateRoute = ({component: Component, ... rest}) => {
+const InPrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={(props) => {
-                if (localStorage.getItem('userToken')) {
-                    return <Redirect to="/" />;
+            render={props => {
+                if (localStorage.getItem("userToken")) {
+                    return <Redirect to="/match" />;
                 } else {
                     return <Component {...props} />;
                 }
             }}
         />
     );
-}
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
-            render={(props) => {
-                if (localStorage.getItem('userToken')) {
+            render={props => {
+                if (localStorage.getItem("userToken")) {
                     return <Component {...props} />;
                 } else {
                     return <Redirect to="/" />;
@@ -94,13 +143,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             }}
         />
     );
-}
-
+};
 
 function Public() {
-    return <h3>Public</h3>;
+    return <Redirect to="/match" />;
 }
 
 function Protected() {
-    return <h3>Protected</h3>;
+    return <Redirect to="/match" />;
+}
+
+function LogOut(props) {
+    return <button onClick={props.logout}>LOGOUT</button>;
 }

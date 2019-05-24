@@ -1,4 +1,4 @@
-import { GET_JOB_START, GET_JOB_SUCCESS, GET_JOB_FAILURE, GET_JOBS_SUCCESS, GET_JOBS_FAILURE } from "../actions"
+import { GET_JOB_START, GET_JOB_SUCCESS, GET_JOB_FAILURE, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, SET_JOB_FAILURE, SET_JOB_SUCCESS } from "../actions"
 
 const initialState = {
     gettingJob: true,
@@ -25,7 +25,7 @@ export const getJob = (state = initialState, action) => {
                 error: '',
             }
         case GET_JOB_SUCCESS:
-            console.log(action.payload)
+        case SET_JOB_SUCCESS:
             return {
                 ...state,
                 gettingJob: false,
@@ -34,6 +34,7 @@ export const getJob = (state = initialState, action) => {
             }
         case GET_JOBS_FAILURE:
         case GET_JOB_FAILURE:
+        case SET_JOB_FAILURE:
             return {
                 ...state,
                 gettingJob: false,

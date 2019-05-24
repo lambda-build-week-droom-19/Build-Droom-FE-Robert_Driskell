@@ -1,0 +1,365 @@
+@import "variables";
+
+input[type="text"],
+textarea {
+  font-size: 2rem;
+  padding: 1rem;
+  border: 1px solid transparent;
+  background: #faf6fe;
+  margin: 0.5rem;
+}
+textarea {
+  height: 25rem;
+  width: 100%;
+  resize: none;
+}
+form {
+  margin: 0 auto;
+  input[type="submit"] {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 2rem 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $primary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $primary;
+  }
+
+  input[type="submit"]:hover {
+    background: #2f0d4f;
+  }
+
+  input[type="button"] {
+    margin-top: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 5rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $secondary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $secondary;
+
+    &[value="CANCEL"]{
+      width: 9.8rem;
+    }
+  }
+
+  input[type="button"]:hover {
+    background: #4f3e0d;
+    border: 2px solid $secondary;
+  }
+}
+
+button {
+  margin-top: 2rem;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: 1s;
+  color: $backgroundNav;
+  text-decoration: none;
+  border: 2px solid $primary;
+  border-radius: 2rem;
+  text-align: center;
+  background: $primary;
+}
+
+button:hover {
+  background: #2f0d4f;
+}
+
+.Seeker {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  z-index: -1;
+
+  .seeker-head {
+    margin-top: 65px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    .img {
+      margin: 0 auto;
+      background-color: rgb(random(150), random(150), random(150));
+      color: white;
+      font-weight: 700;
+      width: 6rem;
+      height: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100%;
+    }
+
+    .key-info {
+      align-self: center;
+      text-align: center;
+      .name {
+        margin-top: 1rem;
+      }
+      .position {
+        margin-top: 1rem;
+      }
+      .location {
+        margin-top: 1rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  input[type="button"] {
+    margin-top: 1rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $secondary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $secondary;
+    width: 10%;
+    @media (max-width: $mobile) {
+        width: 25%;
+    }
+  }
+
+  input[type="button"]:hover {
+    background: #4f3e0d;
+    border: 2px solid $secondary;
+  }
+
+  .description {
+    margin-top: 15px;
+    max-width: 900px;
+    width: 80%;
+
+    .bio {
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-transform: capitalize;
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      p {
+        width: 100%;
+      }
+      form {
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+      }
+    }
+    .contact {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      form {
+        display: flex;
+        justify-content: space-between;
+        div {
+          display: flex;
+          flex-direction: column;
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+        }
+        @media (max-width: $tablet) {
+          flex-direction: column;
+        }
+      }
+    }
+    .interests {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .add-interest {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        form {
+          margin: 0;
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+          input[type="text"] {
+            width: 100%;
+          }
+        }
+      }
+      div {
+        display: flex;
+        align-items: center;
+        .interest {
+          font-size: 3rem;
+          margin-right: 2rem;
+        }
+        button {
+          margin: 0;
+        }
+      }
+    }
+    .experiences {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .experience {
+        form {
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+        }
+      }
+    }
+    .educations {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .education {
+        form {
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+        }
+      }
+    }
+    .skills {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .add-skill {
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+        div {
+          display: flex;
+        }
+      }
+    }
+    .references {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .reference {
+        form {
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+        }
+      }
+    }
+    .social {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      form {
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+      }
+    }
+    .portfolio {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      form {
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+      }
+    }
+    .resume {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      form {
+        strong {
+          font-weight: 700;
+          color: $primary;
+        }
+      }
+    }
+    .projects {
+      border-bottom: 1px solid $primary;
+      strong {
+        font-weight: 700;
+        color: $primary;
+      }
+      .add-project {
+        form {
+          strong {
+            font-weight: 700;
+            color: $primary;
+          }
+          margin: 0;
+        }
+      }
+      div {
+        display: flex;
+        align-items: center;
+        .project {
+          font-size: 2.6rem;
+          margin-right: 2rem;
+          @media (max-width: 400px) {
+            font-size: 2rem;
+          }
+        }
+        button {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+@import "variables";
+// Navigation Styles here
+.transparent-nav {
+    z-index: -1;
+    visibility: hidden;
+    width: 100%;
+    height: 6rem;
+}
+.main-header {
+  background: $backgroundNav;
+  z-index: 4;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  // border: 1px solid blue;
+
+  .container-hamberger {
+    margin: 0, auto;
+
+    i {
+      transition-duration: 1s;
+      cursor: pointer;
+      color: $primary;
+      margin: 0 auto;
+      font-size: 3rem;
+      margin-right: 2rem;
+    }
+    i:hover {
+      color: $secondary;
+    }
+  }
+
+  .ham-inactive i {
+    color: $primary;
+  }
+  .ham-active i {
+    color: $secondary;
+  }
+}
+.container-main-nav {
+  border: 2px solid $primary;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $backgroundNav;
+  width: 35%;
+  height: 100%;
+//   border: 1px solid red;
+  .container-sec-pro {
+    height: 50%;
+    width: 100%;
+    // border: 1px solid blue;
+  }
+  .container-sec-nav {
+    border-top: 2px solid $primary;
+    height: 50%;
+    width: 100%;
+    // border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      margin-top: 2rem;
+    }
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      a {
+        transition: 1s;
+        color: $black;
+        font-size: 2rem;
+        margin-top: 2rem;
+        text-decoration: none;
+        border: 2px solid $backgroundNav;
+        border-radius: 2rem;
+        padding: 1rem;
+        width: 75%;
+        text-align: center;
+      }
+      a:hover {
+        font-size: 2rem;
+        margin-top: 2rem;
+        text-decoration: none;
+        border: 2px solid $primary;
+        border-radius: 2rem;
+        padding: 1rem;
+      }
+      .link-active {
+        text-decoration: none;
+        border: 2px solid $secondary;
+        border-radius: 2rem;
+        padding: 1rem;
+      }
+
+      .link-inactive {
+        // color: $black;
+      }
+    }
+  }
+}
