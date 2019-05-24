@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { Link } from 'react-router-dom';
 
 import { getCurrentUser, updateCurrentUser, getEmployerJobs, SERVER_BASE_URL } from '../actions/index';
+
+import './CurrentCompanyProfile.scss'
 
 class CurrentCompanyProfile extends Component {
     state = {
@@ -11,6 +14,7 @@ class CurrentCompanyProfile extends Component {
         updatedProfile: {
             name: 'string',
             about: 'string',
+            location: 'string',
             contact_info: {
                 phone_number: 'string',
                 email: 'string'
@@ -143,10 +147,11 @@ class CurrentCompanyProfile extends Component {
 
     render() {
         return (
-            <>
+            <div className="company">
+                <Link to="/my-profile/accepted">Accepted</Link>
                 <div className="name">
                     {!this.state.edit ? (<>
-                        <h1>{this.props.company.name}</h1>
+                        <h2>{this.props.company.name}</h2>
                     </>) : (
                             <form onSubmit={this.updateUser}>
                                 <input
@@ -159,7 +164,21 @@ class CurrentCompanyProfile extends Component {
                             </form>
                         )}
                 </div>
-                {/* LOCATION */}
+                <div className="location">
+                    {!this.state.edit ? (<>
+                        <h1>{this.props.company.location}</h1>
+                    </>) : (
+                            <form onSubmit={this.updateUser}>
+                                <input
+                                    name="location"
+                                    type="text"
+                                    value={this.state.updatedProfile.location}
+                                    onChange={this.handleChanges}
+                                />
+                                <input type="submit" style={{ display: 'none' }} />
+                            </form>
+                        )}
+                </div>
                 <div className="about">
                     {!this.state.edit ? (<>
                         <h3>About</h3>
@@ -290,7 +309,7 @@ class CurrentCompanyProfile extends Component {
                         </>
                     ))}
                 </div>
-            </>
+            </div>
         )
     }
 }

@@ -1,5 +1,11 @@
 @import "variables";
 // Navigation Styles here
+.transparent-nav {
+    z-index: -1;
+    visibility: hidden;
+    width: 100%;
+    height: 6rem;
+}
 .main-header {
   background: $backgroundNav;
   z-index: 4;

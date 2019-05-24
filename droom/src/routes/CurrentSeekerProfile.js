@@ -545,8 +545,6 @@ class CurrentSeekerProfile extends Component {
                                     </form>
                                 )}
                         </div>
-                        <div className="job-type">
-                        </div>
                         {this.props.seeker.contact_info && (
                             <div className="contact">
                                 {!this.state.edit ? (
