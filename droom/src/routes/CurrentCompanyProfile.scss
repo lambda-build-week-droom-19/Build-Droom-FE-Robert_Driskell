@@ -1,58 +1,189 @@
-@import '../sass/variables.scss';
+@import "../sass/variables.scss";
+
+input[type="text"],
+textarea {
+  font-size: 2rem;
+  padding: 1rem;
+  border: 1px solid transparent;
+  background: #faf6fe;
+  margin: 0.5rem;
+}
+form {
+  margin: 0 auto;
+  input[type="submit"] {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 2rem 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $primary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $primary;
+  }
+
+  input[type="submit"]:hover {
+    background: #2F0D4F;
+  }
+
+  input[type="button"] {
+    margin-top: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $secondary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $secondary;
+  }
+
+  input[type="button"]:hover {
+    background: #4F3E0D;
+    border: 2px solid $secondary;
+  }
+}
+
+button {
+    margin-top: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: 1s;
+    color: $backgroundNav;
+    text-decoration: none;
+    border: 2px solid $primary;
+    border-radius: 2rem;
+    text-align: center;
+    background: $primary;
+}
+
+button:hover {
+    background: #2F0D4F;
+}
 
 .company {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  .img {
+    background-color: rgb(random(150), random(150), random(150));
+    color: white;
+    font-weight: 700;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+  }
+  .name {
+    font-weight: 700;
+    margin: 0.25rem;
+  }
+  .location {
+    margin: 0.25rem;
+  }
+  .edit-btn {
+    input {
+        cursor: pointer;
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        margin: 2rem 1rem;
+        transition: 1s;
+        color: $backgroundNav;
+        text-decoration: none;
+        border: 2px solid $primary;
+        border-radius: 2rem;
+        text-align: center;
+        background: $primary;
+    }
+    input:hover {
+        background: #2F0D4F;
+    }
+  }
+  .about {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 10px;
-    .img {
-        background-color: rgb(random(150),random(150),random(150));
-        color: white;
-        font-weight: 700;
-        width: 6rem;
-        height: 6rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100%;
+    width: 100%;
+    padding: 0.5rem;
+    border-bottom: 1px solid $primary;
+    strong {
+      font-weight: 700;
+      color: $primary;
     }
-    .name {
-        font-weight: 700;
-        margin: .25rem;
+    form {
+      align-self: center;
     }
-    .location {
-        margin: .25rem;
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    strong {
+      font-weight: 700;
+      color: $primary;
     }
-    .edit-btn {
-        input {
-            background-color: transparent;
-            border-color: $primary;
-            color: $primary;
-            padding: .7rem 2rem;
-            border-radius: 2rem;
-            font-weight: 700;
-        }
+    padding: 0.5rem;
+    border-bottom: 1px solid $primary;
+  }
+  .social {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    strong {
+      font-weight: 700;
+      color: $primary;
     }
-    .about {
-        width: 100%;
-        strong {
-            font-weight: 700;
-            color: $primary;
-        }
-        padding: .5rem;
-        border-bottom: 1px solid $primary;
+    padding: 0.5rem;
+    border-bottom: 1px solid $primary;
+    .social-logos {
+      display: flex;
+      justify-content: space-around;
+      img {
+        max-width: 48px;
+      }
     }
-    .contact {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        strong {
-            font-weight: 700;
-            color: $primary;
-        }
-        padding: .5rem;
-        border-bottom: 1px solid $primary;
+  }
+  .website {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    strong {
+      font-weight: 700;
+      color: $primary;
     }
+    padding: 0.5rem;
+    border-bottom: 1px solid $primary;
+  }
+  .jobs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .job {
+      padding: 3rem 7%;
+      background-color: $lightInput;
+      margin: 1rem 3%;
+      border-radius: 1rem;
+      border: 1px solid $primary;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      button {
+        background-color: transparent;
+        border: none;
+        color: $primary;
+        font-size: 3rem;
+      }
+    }
+  }
 }

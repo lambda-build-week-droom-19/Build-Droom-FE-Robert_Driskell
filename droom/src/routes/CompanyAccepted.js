@@ -42,7 +42,6 @@ class CurrentCompanyProfile extends Component {
         this.setState({
           people: merged
         });
-
         console.log("read me");
         console.log(this.state.jobs);
       })
