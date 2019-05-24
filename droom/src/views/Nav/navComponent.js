@@ -93,7 +93,7 @@ class navComponent extends Component {
 
     render() {
         return (
-            <>
+            <div onMouseLeave={this.clickHamberger}>
                 <div className="transparent-nav">a</div>
                 <div className="main-header">
                     <div className={`container-hamberger ${this.state.hamActive}`}>
@@ -102,23 +102,25 @@ class navComponent extends Component {
                     <h1>Droom</h1>
                 </div>
                 {this.state.extendMobileNav === true ? (
-                    <div className={`container-main-nav ${this.state.extendMobileNav}`}>
+                    <div className={`container-main-nav ${this.state.extendMobileNav}`} >
                         <div className="container-sec-pro">{/* <Preferences/> */}</div>
                         <div className="container-sec-nav">
                             <h2>Name</h2>
                             <nav>
-                                <Link
+                                <Link 
                                     onClick={() => {
                                         this.link("myProActive");
+                                        this.clickHamberger()
                                     }}
                                     className={`nav-link ${this.state.myProActive}`}
                                     to="/my-profile"
                                 >
                                     My Profile
                 </Link>
-                                <Link
+                                <Link 
                                     onClick={() => {
                                         this.link("matchesActive");
+                                        this.clickHamberger()
                                     }}
                                     className={`nav-link ${this.state.matchesActive}`}
                                     to="/match"
@@ -127,9 +129,10 @@ class navComponent extends Component {
                 </Link>
                 {
                     localStorage.getItem("userType") === "employer"?
-                    <Link
+                    <Link 
                                     onClick={() => {
                                         this.link("confirmedActive");
+                                        this.clickHamberger()
                                     }}
                                     className={`nav-link ${this.state.confirmedActive}`}
                                     to="/my-profile/accepted"
@@ -145,7 +148,7 @@ class navComponent extends Component {
                 ) : (
                         <></>
                     )}
-            </>
+            </div>
         );
     }
 }

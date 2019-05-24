@@ -40,7 +40,8 @@ class App extends React.Component {
 
     componentWillUpdate()
     {
-        user_type = localStorage.getItem('userType');
+      user_type = localStorage.getItem('userType');
+      if(Object.keys(this.props.currentUser).length === 0 && !this.props.gettingUser) this.props.getCurrentUser();
     }
     logout = () => {
         localStorage.clear();
@@ -72,7 +73,7 @@ class App extends React.Component {
                     </li>
 
                 </ul> */}
-                <PrivateRoute path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
+                <Route path="/my-profile/" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
 
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
@@ -105,7 +106,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ...state.loginReducer
+    ...state.loginReducer,
+    ...state.userReducer
   };
 };
 

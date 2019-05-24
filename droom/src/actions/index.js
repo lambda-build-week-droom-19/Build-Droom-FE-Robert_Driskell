@@ -16,6 +16,7 @@ export const login = (creds, cb = ()=>{}) => dispatch => {
             localStorage.setItem("userToken", res.data.token);
             localStorage.setItem('userID', res.data.id);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            getCurrentUser()(dispatch);
             window.setTimeout(cb, 250);
         })
         .catch(err => {

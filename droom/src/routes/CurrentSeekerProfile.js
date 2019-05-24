@@ -77,7 +77,7 @@ class CurrentSeekerProfile extends Component {
     //     this.props.getCurrentUser();
     // }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentWillUpdate(prevProps, prevState) {
         if (
             this.props.seeker.id &&
             !this.state.init &&
@@ -455,7 +455,10 @@ class CurrentSeekerProfile extends Component {
     };
 
     render() {
-        if (!this.props.seeker.first_name) {
+        if (this.props.seeker.first_name === undefined) {
+            //setTimeout(()=>{if(this.props.seeker.first_name === undefined) this.setState(...this.state)}, 1000)
+            console.log(this.props.fetching + "HEOOOOEOEOOE ");
+            if(!this.props.fetching)this.props.getCurrentUser();
             return <div>LOADING</div>
         }
         return (
@@ -974,7 +977,8 @@ class CurrentSeekerProfile extends Component {
 
 const mapStateToProps = state => {
     return {
-        seeker: state.userReducer.currentUser
+        seeker: state.userReducer.currentUser,
+        fetching: state.userReducer.gettingUser
     };
 };
 
