@@ -8,30 +8,32 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-export const login = creds => dispatch => {
+export const login = (creds, cb = ()=>{}) => dispatch => {
     dispatch({ type: LOGIN_START });
     return axios
         .post(`${SERVER_BASE_URL}/auth/login`, creds)
         .then(res => {
-            console.log(res);
             localStorage.setItem("userToken", res.data.token);
             localStorage.setItem('userID', res.data.id);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            window.setTimeout(cb, 250);
         })
         .catch(err => {
-            dispatch({ type: LOGIN_FAILURE, payload: err.response.message });
+            dispatch({ type: LOGIN_FAILURE, payload: err });
+            //cb();
         });
 };
 
 export const register = (creds,cb) => dispatch => {
     dispatch({ type: GET_USER_START });
     let cr = { username: creds.username, password: creds.password, user_type: creds.user_type };
-    let name = creds.user_type === 0 ? "seeker" : "employer";
+    let name = creds.user_type === 1 ? "seeker" : "employer";
     return axios
         .post(`${SERVER_BASE_URL}/auth/register`, cr)
         .then(res => {
             localStorage.setItem('userToken', res.data.token);
             console.log(res.data);
+            localStorage.setItem('userType', res.user_type );
             localStorage.setItem('userID', res.data.id);
             axiosWithAuth()
             .post(`${SERVER_BASE_URL}/profile/${name}`,  {user_id : res.data.id})
@@ -50,13 +52,14 @@ export const register = (creds,cb) => dispatch => {
 
 export const createProfile = (data,type,cb) => dispatch =>
 {
-    let name = type === 0 ? "seeker" : "employer";
+    let name = type === 1 ? "seeker" : "employer";
     dispatch({ type: "START" });
+    console.log(data);
     axiosWithAuth().put(`${SERVER_BASE_URL}/profile/${name}`,  data)
     .then(res=> {
         dispatch({ type: "PASSED", payload: res.data });
         localStorage.setItem("userID", res.data.user_id);
-        cb();
+        window.setTimeout(cb, 250);
     }).catch(err => dispatch({ type: "FAILED", payload: err }) );
 }
 
@@ -209,27 +212,77 @@ export const GET_MATCHES_SUCCESS = "GET_MATCHES_SUCCESS";
 export const GET_MATCHES_FAILURE = "GET_MATCHES_FAILURE";
 export const ACCEPT_MATCH = "ACCEPT_MATCH";
 export const REJECT_MATCH = "REJECT_MATCH";
+export const JOB_ACCEPT_MATCH = "JOB_ACCEPT_MATCH";
+export const JOB_REJECT_MATCH = "JOB_REJECT_MATCH";
 
 export const getMatches = (type) => dispatch =>
 {
     dispatch({type: GET_MATCHES_START});
-    let name = type === 0 ?"jobs": "jobs"
-    axios
+    let name = type === 0 ?"jobs/matches/seeker": "jobs/matches/employer"
+    axiosWithAuth()
     .get(`${SERVER_BASE_URL}/${name}/`)
     .then(res =>
         {
+            console.log(res.data);
             dispatch({type: GET_MATCHES_SUCCESS, payload: res.data});
         })
     .catch(err => {console.log(err); dispatch({ type: GET_MATCHES_FAILURE });});
 }
 
-export const swipeMatch = (swipe,id,user) => dispatch =>
+export const swipeMatch = (swipe,reciever,user,type) => dispatch =>
 {
-    dispatch({type: swipe===1 ? ACCEPT_MATCH : REJECT_MATCH});
-/*     if(user.seen.includes(parseInt(id))) return;
-    users.seen.push(parseInt(id));
-    return axiosWithAuth()
-    .put(`${SERVER_BASE_URL}/profile/seeker`, user)
-    .then()
-    .catch() */
+    
+    if(type === "seeker"){
+        dispatch({type: swipe===1 ? ACCEPT_MATCH : REJECT_MATCH});
+        if(!user || !user.seen || user.seen.includes(parseInt(reciever.id))) {console.log("this user does not exist or is already been seen"); return;}
+        user.seen.push(parseInt(reciever.id));
+        axiosWithAuth()
+        .put(`${SERVER_BASE_URL}/profile/seeker`, user)
+        .then(() => {
+
+            if(swipe === 1)
+            return axios
+            .get(`${SERVER_BASE_URL}/jobs/${reciever.id}`)
+            .then(res => 
+                {
+                    
+                    let job = res.data;
+                    let user_id = parseInt(localStorage.getItem("userID"));
+                    if(!job || !job.appliers ||job.appliers.includes(user_id)) {console.log("this user does not exist or is already been seen"); return;}
+                    job.appliers.push(user_id);
+                    axiosWithAuth()
+                    .put(`${SERVER_BASE_URL}/jobs/${reciever.id}`, job)
+                    .then (() => console.log("done"))
+                    .catch(() => console.log("insdie err"));
+                })
+                .catch(()=>console.log('outside error'));
+                else console.log("rejected");
+        })
+        .catch(() => {/* console.log("rejected") */});
+        /* Add to job avalitble list */
+       
+       
+    }else 
+    {
+        dispatch({type: swipe===1 ? JOB_ACCEPT_MATCH : JOB_REJECT_MATCH,  payload: {jobid: reciever.job.id, user: user}});
+            return axiosWithAuth()
+        .get(`${SERVER_BASE_URL}/jobs/${reciever.job.id}`)
+        .then((res) => {
+            console.log(user.user_id)
+            let job = res.data;
+            if(swipe === 1){
+            if(!job || !job.confirmed || job.confirmed.includes(user.user_id)) {console.log("this user does not exist or is already been seen");}
+            else job.confirmed.push(user.user_id)
+            //job.confirmed = [5,4];
+            }
+            if(!job || !job.appliers) {console.log("this user does not exist or is already been seen"); return;}
+            job.appliers = job.appliers.filter(x => user.user_id !== x);
+            //job.appliers = [1,2,3,4,5,6,7,8,9,10];
+            return axiosWithAuth()
+            .put(`${SERVER_BASE_URL}/jobs/${reciever.job.id}`, job)
+            .then((res)=>console.log(res.data))
+            .catch(() => {console.log("Change rejected")})
+        })
+        .catch(() => {console.log("rejected")});
+    }
 }

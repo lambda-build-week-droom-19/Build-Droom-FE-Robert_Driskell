@@ -31,30 +31,36 @@ import initialPage from './views/InitialPage/initialPage.js';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
-const user_type = localStorage.getItem('userType')
+var user_type = localStorage.getItem('userType');
 
 class App extends React.Component {
-    logout = () => {
-        localStorage.clear();
-        window.location.reload();
-    }
     componentWillMount() {
         this.props.getCurrentUser();
     }
 
+    componentWillUpdate()
+    {
+        user_type = localStorage.getItem('userType');
+
+    }
+    logout = () => {
+        localStorage.clear();
+        this.window.refresh();
+    }
     render() {
+        //if(this.props.isLogging) return <div></div>;
         return (
             <div className="App">
-                <NavComponent/>
-                <button onClick={this.logout}>LOGOUT</button>
-                <Route exact path="/" component={LoginPage} />
-                <Route exact path="/intial" component={initialPage} />
-                <ul>
+                {localStorage.getItem("userToken") ? <NavComponent/> : ""}
+                {localStorage.getItem("userToken") ? <Link to="/login" onClick={this.logout}>LOGOUT</Link> : ""}
+                <Route exact path="/login" component={LoginPage} />
+                <InPrivateRoute exact path="/" component={initialPage} />
+                {/* <ul>
                     <li key="1">
                         <Link to="/public">Public Page</Link>
                     </li>
                     <li key="2">
-                        <Link to="/protected">Protected Page</Link>
+                        <Link to="/protected">Matches</Link>
                     </li>
                     <li key="3">
                         <Link to="/my-profile">My Profile</Link>
@@ -65,13 +71,12 @@ class App extends React.Component {
                     <li>
                         <Link to="/signup">Signup</Link>
                     </li>
-                </ul>
 
-                <Route path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
-                <Route path="/public" component={Public} />
+                </ul> */}
+                <PrivateRoute path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
+
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
-                <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
                 <Route
@@ -101,7 +106,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state.loginReducer
   };
 };
 
@@ -116,7 +121,7 @@ const InPrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (localStorage.getItem("userToken")) {
-          return <Redirect to="/" />;
+          return <Redirect to="/match" />;
         } else {
           return <Component {...props} />;
         }
@@ -141,9 +146,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 function Public() {
-  return <h3>Public</h3>;
+    return <Redirect to="/match"/>;
 }
 
 function Protected() {
-  return <h3>Protected</h3>;
+    return <Redirect to="/match"/>;
+}
+
+function LogOut(props)
+{
+    return <button onClick={props.logout}>LOGOUT</button>;
 }

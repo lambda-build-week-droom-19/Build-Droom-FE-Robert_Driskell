@@ -27,9 +27,9 @@ class LoginPage extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props
-      .login(this.state.credentials)
+      .login(this.state.credentials, ()=> this.props.history.push("/match"))
       .then(() => {
-        this.props.history.push("/protected");
+        
       })
       .then(() => {
         this.props.getCurrentUser();

@@ -112,7 +112,7 @@ class CurrentCompanyProfile extends Component {
             .then(res => {
                 console.log('CREATE JOB')
                 console.log(res)
-                this.props.history.push(`jobs/${res.data.id}`)
+                this.props.history.push(`job/${res.data.id}/edit`)
             })
             .catch(err => {
                 console.log('CREATE JOB ERROR')
@@ -327,7 +327,7 @@ class CurrentCompanyProfile extends Component {
                             <button onClick={this.createJob}>Create Job</button>
                         )}
                     {this.props.jobs.map(job => (
-                        <div className="job">
+                        <div className="job" onClick={()=>this.props.history.push(`/job/${job.id}`)}>
                             <div className="job-info">
                                 <h3>{job.job_title}</h3>
                                 <p>{job.location}</p>
