@@ -62,7 +62,11 @@ class App extends React.Component {
                     <li>
                         <Link to="/intial">Initial Page</Link>
                     </li>
+                    <li>
+                        <Link to="/signup">Signup</Link>
+                    </li>
                 </ul>
+
  				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
