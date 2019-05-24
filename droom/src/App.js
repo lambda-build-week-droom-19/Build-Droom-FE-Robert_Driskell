@@ -31,17 +31,22 @@ import initialPage from './views/InitialPage/initialPage.js';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
-const user_type = localStorage.getItem('userType')
+var user_type = localStorage.getItem('userType');
 
 class App extends React.Component {
     logout = () => {
         localStorage.clear();
-        window.location.reload();
+        this.props.history.push("/login");
     }
     componentWillMount() {
         this.props.getCurrentUser();
     }
 
+    componentWillUpdate()
+    {
+        user_type = localStorage.getItem('userType');
+
+    }
     render() {
         return (
             <div className="App">
@@ -54,7 +59,7 @@ class App extends React.Component {
                         <Link to="/public">Public Page</Link>
                     </li>
                     <li key="2">
-                        <Link to="/protected">Protected Page</Link>
+                        <Link to="/protected">Matches</Link>
                     </li>
                     <li key="3">
                         <Link to="/my-profile">My Profile</Link>
@@ -67,7 +72,7 @@ class App extends React.Component {
                     </li>
                 </ul>
 
- 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
+                <PrivateRoute path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
                 <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
@@ -141,9 +146,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 function Public() {
-  return <h3>Public</h3>;
+    return <Redirect to="/match"/>;
 }
 
 function Protected() {
-  return <h3>Protected</h3>;
+    return <Redirect to="/match"/>;
+}
+
+function LogOut()
+{
+    return  <button onClick={this.logout}>LOGOUT</button>
 }
