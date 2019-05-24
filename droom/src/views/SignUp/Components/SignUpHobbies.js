@@ -51,7 +51,7 @@ class Hobbies extends React.Component
     {
         return (
         <div className="signin-main-hub">
-            <h2>Any intrests or hobbies?</h2>
+            <h2>Any interests or hobbies?</h2>
             <button onClick={()=>this.addItem()}>Add New Hobby</button>
             <div className="signin-input-hub">
                 {this.state.interests.map((x,i) => 
