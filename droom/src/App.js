@@ -4,11 +4,11 @@ import "./sass/global.scss";
 import { axiosWithAuth } from "./utils/axiosWithAuth";
 import { connect } from "react-redux";
 import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect,
+    withRouter
 } from "react-router-dom";
 import { login, getCurrentUser } from "./actions/index";
 import SignUpApp from "./views/SignUp/SignUpApp";
@@ -38,10 +38,9 @@ class App extends React.Component {
         this.props.getCurrentUser();
     }
 
-    componentWillUpdate()
-    {
-      user_type = localStorage.getItem('userType');
-      if(Object.keys(this.props.currentUser).length === 0 && !this.props.gettingUser) this.props.getCurrentUser();
+    componentWillUpdate() {
+        user_type = localStorage.getItem('userType');
+        if (Object.keys(this.props.currentUser).length === 0 && !this.props.gettingUser && localStorage.getItem('userType')) this.props.getCurrentUser();
     }
     logout = () => {
         localStorage.clear();
@@ -51,7 +50,7 @@ class App extends React.Component {
         //if(this.props.isLogging) return <div></div>;
         return (
             <div className="App">
-                {localStorage.getItem("userToken") ? <NavComponent/> : ""}
+                {localStorage.getItem("userToken") ? <NavComponent /> : ""}
                 {localStorage.getItem("userToken") ? <button><Link to="/login" onClick={this.logout}>LOGOUT</Link></button> : ""}
                 <Route exact path="/login" component={LoginPage} />
                 <InPrivateRoute exact path="/" component={initialPage} />
@@ -77,21 +76,21 @@ class App extends React.Component {
 
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
-                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
-                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
+                <PrivateRoute path="/job/:id" exact component={JobProfile} />
+                <PrivateRoute path="/job/:id/:edit" component={JobProfile} />
                 <Route
-                  path="/seeker/:id"
-                  render={props => (
-                   <SeekerProfileByID {...props} />
+                    path="/seeker/:id"
+                    render={props => (
+                        <SeekerProfileByID {...props} />
                     )}
-                 />
-                <Route
-                 path="/employer/:id"
-                  render={props => (
-                    <CompanyProfileByID {...props} />
-                 )}
                 />
-                <Route path="/my-profile/accepted" component={CompanyAccepted}/>
+                <Route
+                    path="/employer/:id"
+                    render={props => (
+                        <CompanyProfileByID {...props} />
+                    )}
+                />
+                <Route path="/my-profile/accepted" component={CompanyAccepted} />
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -99,62 +98,61 @@ class App extends React.Component {
                     <Route exact path="debug-chase" component={DebugRouteChase} /> 
                     
                     */}
-      </div>
-    );
-  }
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = state => {
-  return {
-    ...state.loginReducer,
-    ...state.userReducer
-  };
+    return {
+        ...state.loginReducer,
+        ...state.userReducer
+    };
 };
 
 export default connect(
-  mapStateToProps,
-  { login, getCurrentUser }
+    mapStateToProps,
+    { login, getCurrentUser }
 )(App);
 
 const InPrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        if (localStorage.getItem("userToken")) {
-          return <Redirect to="/match" />;
-        } else {
-          return <Component {...props} />;
-        }
-      }}
-    />
-  );
+    return (
+        <Route
+            {...rest}
+            render={props => {
+                if (localStorage.getItem("userToken")) {
+                    return <Redirect to="/match" />;
+                } else {
+                    return <Component {...props} />;
+                }
+            }}
+        />
+    );
 };
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        if (localStorage.getItem("userToken")) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to="/" />;
-        }
-      }}
-    />
-  );
+    return (
+        <Route
+            {...rest}
+            render={props => {
+                if (localStorage.getItem("userToken")) {
+                    return <Component {...props} />;
+                } else {
+                    return <Redirect to="/" />;
+                }
+            }}
+        />
+    );
 };
 
 function Public() {
-    return <Redirect to="/match"/>;
+    return <Redirect to="/match" />;
 }
 
 function Protected() {
-    return <Redirect to="/match"/>;
+    return <Redirect to="/match" />;
 }
 
-function LogOut(props)
-{
+function LogOut(props) {
     return <button onClick={props.logout}>LOGOUT</button>;
 }

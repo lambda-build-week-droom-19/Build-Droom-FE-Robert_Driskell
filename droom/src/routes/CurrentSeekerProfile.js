@@ -462,9 +462,12 @@ class CurrentSeekerProfile extends Component {
         if (this.props.seeker.first_name === undefined) {
             //setTimeout(()=>{if(this.props.seeker.first_name === undefined) this.setState(...this.state)}, 1000)
             console.log(this.props.fetching + "HEOOOOEOEOOE ");
-            if(!this.props.fetching)this.props.getCurrentUser();
+            if(!this.props.fetching && localStorage.getItem('userType'))this.props.getCurrentUser();
             return <div>LOADING</div>
         }
+        // if (!this.props.seeker.first_name) {
+        //     return <div className="loading">Loading</div>
+        // }
         return (
             <div className='Seeker'>
                 {this.props.seeker && (<>
