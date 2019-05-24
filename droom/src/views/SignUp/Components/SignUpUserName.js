@@ -86,19 +86,19 @@ class Username extends React.Component {
           )}
           <button
             onClick={() => {
-              this.authenticate(0, this.props.next);
+              this.authenticate(1, this.props.next);
             }}
           >
             Seeker
           </button>
           <button
             onClick={() => {
-              this.authenticate(1, this.props.next);
+              this.authenticate(0, this.props.next);
             }}
           >
             Empoyeer
           </button>
-          <button onClick={() => this.props.next()}> bypass</button>
+          {/*<button onClick={() => this.props.next()}> bypass</button>*/}
         </div>
       </div>
     );

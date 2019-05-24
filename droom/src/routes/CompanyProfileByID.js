@@ -93,10 +93,10 @@ export default class CurrentCompanyProfile extends Component {
                 </div>
                 <div className="jobs">
                     {this.state.jobs.map(job => (
-                        <>
+                        <div onClick={()=>this.props.history.push(`/job/${job.id}`)}>
                             <h3>{job.job_title}</h3>
                             <p>{job.location}</p>
-                        </>
+                        </div>
                     ))}
                 </div>
             </>

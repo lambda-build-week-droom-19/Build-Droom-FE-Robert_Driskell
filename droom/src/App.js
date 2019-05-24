@@ -34,10 +34,6 @@ import DebugRouteChase from './DebugRouteChase'; */
 var user_type = localStorage.getItem('userType');
 
 class App extends React.Component {
-    logout = () => {
-        localStorage.clear();
-        this.props.history.push("/login");
-    }
     componentWillMount() {
         this.props.getCurrentUser();
     }
@@ -47,14 +43,19 @@ class App extends React.Component {
         user_type = localStorage.getItem('userType');
 
     }
+    logout = () => {
+        localStorage.clear();
+        this.window.refresh();
+    }
     render() {
+        //if(this.props.isLogging) return <div></div>;
         return (
             <div className="App">
-                <NavComponent/>
-                <button onClick={this.logout}>LOGOUT</button>
-                <Route exact path="/" component={LoginPage} />
-                <Route exact path="/intial" component={initialPage} />
-                <ul>
+                {localStorage.getItem("userToken") ? <NavComponent/> : ""}
+                {localStorage.getItem("userToken") ? <Link to="/login" onClick={this.logout}>LOGOUT</Link> : ""}
+                <Route exact path="/login" component={LoginPage} />
+                <InPrivateRoute exact path="/" component={initialPage} />
+                {/* <ul>
                     <li key="1">
                         <Link to="/public">Public Page</Link>
                     </li>
@@ -70,13 +71,11 @@ class App extends React.Component {
                     <li>
                         <Link to="/signup">Signup</Link>
                     </li>
-                </ul>
+                </ul> */}
 
                 <PrivateRoute path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
-                <Route path="/public" component={Public} />
                 <Route path="/signup" component={SignUpApp} />
                 <PrivateRoute path="/match" component={MatchingApp} />
-                <PrivateRoute path="/protected" component={Protected} />
                 <PrivateRoute path="/job/:id" exact component={JobProfile}/>
                 <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
                 <Route
@@ -106,7 +105,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state.loginReducer
   };
 };
 
@@ -121,7 +120,7 @@ const InPrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (localStorage.getItem("userToken")) {
-          return <Redirect to="/" />;
+          return <Redirect to="/match" />;
         } else {
           return <Component {...props} />;
         }
@@ -153,7 +152,7 @@ function Protected() {
     return <Redirect to="/match"/>;
 }
 
-function LogOut()
+function LogOut(props)
 {
-    return  <button onClick={this.logout}>LOGOUT</button>
+    return <button onClick={props.logout}>LOGOUT</button>;
 }

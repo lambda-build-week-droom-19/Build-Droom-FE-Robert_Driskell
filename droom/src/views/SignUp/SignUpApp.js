@@ -134,9 +134,9 @@ class SignUpApp extends React.Component
                 },
                 website: ""
             }
-            this.props.createProfile( obj, this.data.user_type, ()=>this.props.history.push({pathname: "/protected"}))
+            this.props.createProfile( obj, this.data.user_type, ()=>this.props.history.push({pathname: "/match"}))
         }
-        if(this.state.rederect) return <Redirect to={{pathname: "/protected"}} />
+        if(this.state.rederect) return <div/>
         return(
         <div>
             
