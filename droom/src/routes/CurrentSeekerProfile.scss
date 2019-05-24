@@ -1,0 +1,52 @@
+@import '../sass/variables.scss';
+
+.Seeker{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    z-index: -1;
+
+    .seeker-head{
+        margin-top: 65px;
+        display: flex;
+        flex-direction: column;
+
+        .img {
+            margin: 0 auto;
+            background-color: rgb(random(150),random(150),random(150));
+            color: white;
+            font-weight: 700;
+            width: 6rem;
+            height: 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+        }
+
+        .key-info{
+            align-self: center;
+            text-align: center;
+        }
+
+    }
+
+
+
+    .description{
+        margin-top: 15px;
+        max-width: 900px;
+        width: 100%;
+
+        .bio{
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+    }
+
+
+
+}

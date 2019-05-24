@@ -19,6 +19,8 @@ import CurrentSeekerProfile from './routes/CurrentSeekerProfile';
 import DebugRouteBobby from './DebugRouteBobby';
 import DebugRouteChase from './DebugRouteChase'; */
 
+const user_type = localStorage.getItem('userType')
+
 
 class App extends React.Component {
     logout = () => {
@@ -28,11 +30,11 @@ class App extends React.Component {
     componentWillMount() {
         this.props.getCurrentUser();
     }
-    
+
     render() {
         return (
             <div className="App">
-                <button onClick={this.logout}>LOGOUT</button>
+                {/* <button onClick={this.logout}>LOGOUT</button>
                 <Route exact path="/" component={LoginPage} />
                 <ul>
                     <li key="1">
@@ -44,15 +46,15 @@ class App extends React.Component {
                     <li key="3">
                         <Link to="/my-profile">My Profile</Link>
                     </li>
-                </ul>
-                <NavComponent/>
- 				        <Route path="/my-profile" exact component={CurrentCompanyProfile} />
-                <Route path="/public" component={Public} />
-                <Route path="/signup" component={SignUpApp} />
-                <PrivateRoute path="/match" component={MatchingApp} />
-                <PrivateRoute path="/protected" component={Protected} />
-                <PrivateRoute path="/job/:id" exact component={JobProfile}/>
-                <PrivateRoute path="/job/:id/:edit" component={JobProfile}/> 
+                </ul> */}
+                <NavComponent />
+                <Route path="/my-profile" exact component={user_type === 'seeker' ? CurrentSeekerProfile : CurrentCompanyProfile} />
+                <Route exact path="/public" component={Public} />
+                <Route exact path="/signup" component={SignUpApp} />
+                <PrivateRoute exact path="/match" component={MatchingApp} />
+                <PrivateRoute exact path="/protected" component={Protected} />
+                <PrivateRoute exact path="/job/:id" component={JobProfile} />
+                <PrivateRoute exact path="/job/:id/:edit" component={JobProfile} />
                 {/* 
                         Commented out routes for debuging
                     <Route exact path="/" component={LandingPage} />
@@ -73,7 +75,7 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, { login, getCurrentUser })(App)
 
-const InPrivateRoute = ({component: Component, ... rest}) => {
+const InPrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}

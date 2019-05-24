@@ -455,11 +455,16 @@ class CurrentSeekerProfile extends Component {
     };
 
     render() {
+        if (!this.props.seeker.first_name) {
+            return <div>LOADING</div>
+        }
         return (
-            <>
+            <div className='Seeker'>
                 {this.props.seeker && (<>
                     <div className="seeker-head">
-                        <div className="profile-pic">IMG HERE</div>
+                        <div className="img">
+                            <h1>{this.props.seeker.first_name.charAt(0)}</h1>
+                        </div>
                         <div className="key-info">
                             <div className="name">
                                 {!this.state.edit ? (
@@ -516,6 +521,14 @@ class CurrentSeekerProfile extends Component {
                             </div>
                         </div>
                     </div>
+                    {!this.state.edit ? (
+                        <input type="button" value="EDIT" onClick={this.edit} />
+                    ) : (
+                            <form onSubmit={this.updateUser}>
+                                <input type="submit" value="SUBMIT" />
+                                <input type="button" value="CANCEL" onClick={this.cancel} />
+                            </form>
+                        )}
                     <div className="description">
                         <div className="bio">
                             {!this.state.edit ? (
@@ -533,7 +546,6 @@ class CurrentSeekerProfile extends Component {
                                 )}
                         </div>
                         <div className="job-type">
-                            {!this.state.edit ? <>JOB TYPE?</> : <></>}
                         </div>
                         {this.props.seeker.contact_info && (
                             <div className="contact">
@@ -796,51 +808,51 @@ class CurrentSeekerProfile extends Component {
                                 ))}
                         </div>
                         <div className="social">
-                            {this.props.seeker.social_media &&(<>
-                            {!this.state.edit ? (
-                                <>
-                                    {this.props.seeker.social_media.facebook && (
-                                        <p>{this.props.seeker.social_media.facebook}</p>
-                                    )}
-                                    {this.props.seeker.social_media.linkedin && (
-                                        <p>{this.props.seeker.social_media.linkedin}</p>
-                                    )}
-                                    {this.props.seeker.social_media.twitter && (
-                                        <p>{this.props.seeker.social_media.twitter}</p>
-                                    )}
-                                    {this.props.seeker.social_media.github && (
-                                        <p>{this.props.seeker.social_media.github}</p>
-                                    )}
-                                </>
-                            ) : (
-                                    <form onSubmit={this.updateUser}>
-                                        <input
-                                            name="facebook"
-                                            value={this.state.updatedProfile.social_media.facebook}
-                                            placeholder="Facebook"
-                                            onChange={this.handleSocialMediaChanges}
-                                        />
-                                        <input
-                                            name="linkedin"
-                                            value={this.state.updatedProfile.social_media.linkedin}
-                                            placeholder="LinkedIn"
-                                            onChange={this.handleSocialMediaChanges}
-                                        />
-                                        <input
-                                            name="twitter"
-                                            value={this.state.updatedProfile.social_media.twitter}
-                                            placeholder="Twitter"
-                                            onChange={this.handleSocialMediaChanges}
-                                        />
-                                        <input
-                                            name="github"
-                                            value={this.state.updatedProfile.social_media.github}
-                                            placeholder="GitHub"
-                                            onChange={this.handleSocialMediaChanges}
-                                        />
-                                        <input type="submit" style={{ display: "none" }} />
-                                    </form>
-                                )}</>)}
+                            {this.props.seeker.social_media && (<>
+                                {!this.state.edit ? (
+                                    <>
+                                        {this.props.seeker.social_media.facebook && (
+                                            <p>{this.props.seeker.social_media.facebook}</p>
+                                        )}
+                                        {this.props.seeker.social_media.linkedin && (
+                                            <p>{this.props.seeker.social_media.linkedin}</p>
+                                        )}
+                                        {this.props.seeker.social_media.twitter && (
+                                            <p>{this.props.seeker.social_media.twitter}</p>
+                                        )}
+                                        {this.props.seeker.social_media.github && (
+                                            <p>{this.props.seeker.social_media.github}</p>
+                                        )}
+                                    </>
+                                ) : (
+                                        <form onSubmit={this.updateUser}>
+                                            <input
+                                                name="facebook"
+                                                value={this.state.updatedProfile.social_media.facebook}
+                                                placeholder="Facebook"
+                                                onChange={this.handleSocialMediaChanges}
+                                            />
+                                            <input
+                                                name="linkedin"
+                                                value={this.state.updatedProfile.social_media.linkedin}
+                                                placeholder="LinkedIn"
+                                                onChange={this.handleSocialMediaChanges}
+                                            />
+                                            <input
+                                                name="twitter"
+                                                value={this.state.updatedProfile.social_media.twitter}
+                                                placeholder="Twitter"
+                                                onChange={this.handleSocialMediaChanges}
+                                            />
+                                            <input
+                                                name="github"
+                                                value={this.state.updatedProfile.social_media.github}
+                                                placeholder="GitHub"
+                                                onChange={this.handleSocialMediaChanges}
+                                            />
+                                            <input type="submit" style={{ display: "none" }} />
+                                        </form>
+                                    )}</>)}
                         </div>
                         <div className="portfolio">
                             {!this.state.edit ? (
@@ -910,17 +922,14 @@ class CurrentSeekerProfile extends Component {
                                     </>
                                 ))}
                         </div>
-                    </div>
-                {!this.state.edit ? (
-                    <input type="button" value="EDIT" onClick={this.edit} />
-                ) : (
+                    </div>{this.state.edit &&
                         <form onSubmit={this.updateUser}>
-                    <input type="submit" value="SUBMIT" />
-                    <input type="button" value="CANCEL" onClick={this.cancel} />
-                </form>
-                )}
+                            <input type="submit" value="SUBMIT" />
+                            <input type="button" value="CANCEL" onClick={this.cancel} />
+                        </form>
+                    }
                 </>)}
-            </>
+            </div>
         );
     }
 }
