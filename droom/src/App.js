@@ -52,7 +52,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 {localStorage.getItem("userToken") ? <NavComponent/> : ""}
-                {localStorage.getItem("userToken") ? <Link to="/login" onClick={this.logout}>LOGOUT</Link> : ""}
+                {localStorage.getItem("userToken") ? <button><Link to="/login" onClick={this.logout}>LOGOUT</Link></button> : ""}
                 <Route exact path="/login" component={LoginPage} />
                 <InPrivateRoute exact path="/" component={initialPage} />
                 {/* <ul>
