@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {getMatches,swipeMatch} from "../../../actions";
 
+import '../../../sass/MatchSeeker.scss';
+
 class MatchSeeker extends React.Component
 {
     componentDidMount()
@@ -19,7 +21,22 @@ class MatchSeeker extends React.Component
         return (
             <div>
                 <MatchProfile data={this.props.currentMatches[0]} />
-                <div><button onClick={()=> this.props.swipeMatch(0,this.props.currentMatches[0],this.props.user_data,"seeker")}>-</button><button onClick={()=> this.props.swipeMatch(1,this.props.currentMatches[0],this.props.user_data,"seeker")}>+</button></div> 
+                <div className="swipe-buttons">
+                    <button 
+                        onClick={()=> this.props.swipeMatch(
+                            0,
+                            this.props.currentMatches[0],
+                            this.props.user_data,"seeker"
+                        )}
+                    >-</button>
+                    <button 
+                        onClick={()=> this.props.swipeMatch(
+                            1,
+                            this.props.currentMatches[0],
+                            this.props.user_data,"seeker"
+                        )}
+                    >+</button>
+                </div> 
             </div>
         )
     }
@@ -35,41 +52,53 @@ export default connect(mapStateToProps, {getMatches, swipeMatch})(MatchSeeker);
 const MatchProfile = props =>
 {
     return(
-    <div>
-        <div>
-            <div> {/*Header*/}
-                <div>{"Company Name"+props.data.id}</div>
-                <div>{props.data.job_title}</div>
+    <div className="seeker-match">
+        <div className="header">
+            <div className="header-left"> {/*Header*/}
+                <h3>{"Company Name"+props.data.id}</h3>
+                <h4>{props.data.job_title}</h4>
             </div>
             <div/> {/* Vertical line*/}
-            <div>{props.data.description}</div>
+            <div className="company-description">{props.data.description}</div>
         </div>
         <div> {/*body*/}
             <div> {/*top content*/}
-                <div>
-                    <div>Basic Information</div>
-                    <div><strong>Experience Level: </strong><span>{'Entry'}</span></div>
-                    <div><strong>Starting Pay: </strong><span>{props.data.starting_pay}</span></div>
-                    <div><strong>Location: </strong><span>{props.data.location}</span></div>
-                    <div><span>{'Full Time'}</span> <span>{props.data.pay_type}</span></div>
+                <div className="basic-info">
+                    <h4>Basic Information</h4>
+                    <div className="experience">
+                        <p><strong>Experience Level:</strong> {'Entry'}</p>
+                    </div>
+                    <div className="pay">
+                        <p><strong>Starting Pay: </strong>{props.data.starting_pay}</p>
+                    </div>
+                    <div className="location">
+                        <p><strong>Location: </strong>{props.data.location}</p>
+                    </div>
+                    <div className="pay-details">
+                        <span className="full-time"><p>{'Full Time'}</p></span> <span className="pay-type"><p>{props.data.pay_type}</p></span>
+                    </div>
                 </div>
-                <div>
-                    <div>Requirements</div>
-                    <div><strong>Education: </strong><span>{'Degree'}</span></div>
-                    <div><strong>Skills: </strong></div>
+                <div className="req">
+                    <h4>Requirements</h4>
+                    <div className="education">
+                        <p><strong>Education: </strong>{'Degree'}</p>
+                    </div>
+                    <div className="skills">
+                        <p><strong>Skills: </strong></p>
+                    </div>
                     <div>
-                        {props.data.required_skills ? props.data.required_skills.map(x=><div>{x}</div>) : ""}
+                        {props.data.required_skills ? props.data.required_skills.map(x=><p>{x}</p>) : ""}
                     </div>
                 </div>
                 <div>
                     <button>View Company Profile</button>
                 </div>
             </div>
-            <div>
-                <div>responsibilities</div>
+            <div className="responsibilities">
+                <h4>responsibilities</h4>
                 <div/> {/*horizontal bar*/}
                 <ul>
-                    {props.data.responsibilities ? props.data.responsibilities.map(x=> <li>{x}</li>): ""}
+                    {props.data.responsibilities ? props.data.responsibilities.map(x=> <li><p>{x}</p></li>): ""}
                 </ul>
             </div>
         </div>
