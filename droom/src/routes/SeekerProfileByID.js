@@ -16,7 +16,7 @@ export default class SeekerProfileByID extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if(this.props.match.params.id !== newProps.match.params.id) {
+        if (this.props.match.params.id !== newProps.match.params.id) {
             this.fetchSeeker(newProps.match.params.id);
         }
     }
@@ -41,53 +41,59 @@ export default class SeekerProfileByID extends Component {
             return <div className="loading">Loading</div>
         }
         return (
-            <>
+            <div className='Seeker'>
                 {this.state.seeker && (<>
                     <div className="seeker-head">
-                        <div className="profile-pic">IMG HERE</div>
+                        <div className="img">
+                            <h1>{this.state.seeker.first_name.charAt(0)}</h1>
+                        </div>
                         <div className="key-info">
                             <div className="name">
                                 {this.state.seeker.first_name}, {this.state.seeker.last_name}
                             </div>
                             <div className="position">
-                                {this.state.seeker.position}
+                                <>{this.state.seeker.position}</>
                             </div>
                             <div className="location">
-                                {this.state.seeker.location}
+                                <>{this.state.seeker.location}</>
                             </div>
                         </div>
                     </div>
                     <div className="description">
                         <div className="bio">
-                            {this.state.seeker.bio}
+                            <strong><p>Biography</p></strong>
+                            <p>{this.state.seeker.bio}</p>
                         </div>
                         {this.state.seeker.contact_info && (
                             <div className="contact">
                                 <p>
-                                    <strong>Phone: </strong>
+                                    <strong><p>Phone</p></strong>
                                     {this.state.seeker.contact_info.phone_number}
                                 </p>
                                 <p>
-                                    <strong>Email: </strong>
+                                    <strong><p>Email</p></strong>
                                     {this.state.seeker.contact_info.email}
                                 </p>
                             </div>
                         )}
                         <div className="interests">
+                            <strong><p>Interests</p></strong>
                             {this.state.seeker.interests &&
                                 this.state.seeker.interests.map((interest, index) => (
-                                    <>
+                                    <div>
                                         <div className="interest" key={`interest ${index}`}>
                                             {interest}
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
                         </div>
                         <div className="experiences">
+                            <strong><p>Experiences</p></strong>
                             {this.state.seeker.past_experience &&
                                 this.state.seeker.past_experience.map((experience, index) => (
                                     <div className="experience" key={`experience ${index}`}>
                                         {this.state.seeker.past_experience[index] && (<>
+
                                             <h3>{experience.name}</h3>
                                             <h5>{experience.title}</h5>
                                             <p>{experience.description}</p>
@@ -95,7 +101,8 @@ export default class SeekerProfileByID extends Component {
                                     </div>
                                 ))}
                         </div>
-                        <div className="education">
+                        <div className="educations">
+                            <strong><p>Education</p></strong>
                             {this.state.seeker.education &&
                                 this.state.seeker.education.map((education, index) => (
                                     <div className="education" key={`education-${index}`}>
@@ -107,6 +114,7 @@ export default class SeekerProfileByID extends Component {
                                 ))}
                         </div>
                         <div className="skills">
+                            <strong><p>Skills</p></strong>
                             {this.state.seeker.skills &&
                                 this.state.seeker.skills.map((skill, index) => (
                                     <>
@@ -117,6 +125,7 @@ export default class SeekerProfileByID extends Component {
                                 ))}
                         </div>
                         <div className="references">
+                            <strong><p>References</p></strong>
                             {this.state.seeker.references &&
                                 this.state.seeker.references.map((reference, index) => (
                                     <div className="reference" key={`reference-${index}`}>
@@ -130,6 +139,7 @@ export default class SeekerProfileByID extends Component {
                                 ))}
                         </div>
                         <div className="social">
+                            <strong><p>Social Links</p></strong>
                             {this.state.seeker.social_media && (<>
                                 {this.state.seeker.social_media.facebook && (
                                     <p>{this.state.seeker.social_media.facebook}</p>
@@ -146,30 +156,35 @@ export default class SeekerProfileByID extends Component {
                             </>)}
                         </div>
                         <div className="portfolio">
-                            <p>
-                                <strong>Portfolio: </strong>
-                                {this.state.seeker.portfolio}
-                            </p>
+                            <strong><p>Portfolio</p></strong>
+                            <>
+                                <p>
+                                    {this.state.seeker.portfolio}
+                                </p>
+                            </>
                         </div>
                         <div className="resume">
-                            <p>
-                                <strong>Resume: </strong>
-                                {this.state.seeker.resume}
-                            </p>
+                            <strong><p>Resume</p></strong>
+                            <>
+                                <p>
+                                    {this.state.seeker.resume}
+                                </p>
+                            </>
                         </div>
                         <div className="projects">
+                            <strong><p>Project Links</p></strong>
                             {this.state.seeker.projects &&
                                 this.state.seeker.projects.map((project, index) => (
-                                    <>
+                                    <div>
                                         <div className="project" key={`project ${index}`}>
                                             {project}
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
                         </div>
                     </div>
                 </>)}
-            </>
-        )
+            </div>
+        );
     }
 }

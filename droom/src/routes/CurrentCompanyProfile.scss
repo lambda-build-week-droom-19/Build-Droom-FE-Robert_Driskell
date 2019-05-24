@@ -32,7 +32,7 @@ form {
     background: #2F0D4F;
   }
 
-  input[type="button"] {
+  #cancel-btn {
     margin-top: 2rem;
     cursor: pointer;
     font-size: 2rem;
@@ -47,7 +47,7 @@ form {
     background: $secondary;
   }
 
-  input[type="button"]:hover {
+  #cancel-btn:hover {
     background: #4F3E0D;
     border: 2px solid $secondary;
   }

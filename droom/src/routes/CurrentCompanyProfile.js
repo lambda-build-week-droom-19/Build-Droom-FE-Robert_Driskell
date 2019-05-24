@@ -153,7 +153,6 @@ class CurrentCompanyProfile extends Component {
         }
         return (
             <div className="company">
-                <Link to="/my-profile/accepted">Accepted</Link>
                 <div className="img">
                     <h1>{this.props.company.name.charAt(0)}</h1>
                 </div>
@@ -192,10 +191,12 @@ class CurrentCompanyProfile extends Component {
                         <input type="button" value="EDIT" onClick={this.edit} />
                     </div>
                 ) : (
-                        <form onSubmit={this.updateUser}>
-                            <input type="submit" value="SUBMIT" />
-                            <input type="button" value="CANCEL" onClick={this.cancel} />
-                        </form>
+                        <div class="cancel">
+                            <form onSubmit={this.updateUser}>
+                                <input type="submit" value="SUBMIT" />
+                                <input id="cancel-btn" type="button" value="CANCEL" onClick={this.cancel} />
+                            </form>
+                        </div>
                     )}
                 <div className="about">
                     {!this.state.edit ? (<>
