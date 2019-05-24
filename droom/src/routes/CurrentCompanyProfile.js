@@ -204,8 +204,6 @@ class CurrentCompanyProfile extends Component {
                     </>) : (
                             <form onSubmit={this.updateUser}>
                                 <textarea
-                                    rows="5"
-                                    cols="35"
                                     name="about"
                                     type="text"
                                     value={this.state.updatedProfile.about}
